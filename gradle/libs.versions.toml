@@ -10,9 +10,14 @@ androidx-core = "1.16.0"
 androidx-espresso = "3.6.1"
 androidx-lifecycle = "2.8.4"
 androidx-testExt = "1.2.1"
-composeMultiplatform = "1.8.0"
+composeMultiplatform = "1.5.11"
 junit = "4.13.2"
-kotlin = "2.1.21"
+kotlin = "1.9.21"
+# Koin - Dependency Injection framework
+koin-version = "3.5.0"
+koinKspVersion = "1.2.2"  # Koin KSP version (Kotlin Symbol Processing)
+koin-compose-version = "1.1.0"
+coroutine-version = "1.7.3"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -26,10 +31,15 @@ androidx-constraintlayout = { module = "androidx.constraintlayout:constraintlayo
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity" }
 androidx-lifecycle-viewmodel = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel", version.ref = "androidx-lifecycle" }
 androidx-lifecycle-runtimeCompose = { module = "org.jetbrains.androidx.lifecycle:lifecycle-runtime-compose", version.ref = "androidx-lifecycle" }
+koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin-version" }  # Koin Core
+koin-annotations = { module = "io.insert-koin:koin-annotations", version.ref = "koinKspVersion" }  # Koin Annotations (KSP)
+koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin-version" }  # Koin Android Integration
+koin-test = { module = "io.insert-koin:koin-test", version.ref = "koin-version" }
+kotlin-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutine-version" }  # Kotlin Coroutines Core
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
 composeMultiplatform = { id = "org.jetbrains.compose", version.ref = "composeMultiplatform" }
-composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+composeCompiler = { id = "org.jetbrains.compose", version.ref = "composeMultiplatform" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
