@@ -1,13 +1,21 @@
+@file:OptIn(ExperimentalKotlinGradlePluginApi::class)
+
+import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
+
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
-    // id("com.google.devtools.ksp") version "1.9.21-1.0.15"
-    kotlin("plugin.serialization") version "1.9.0"  // Kotlin Serialization Plugin
+  //  alias(libs.plugins.composeCompiler)
+    kotlin("plugin.serialization") version "1.9.0"
+   // alias(libs.plugins.sqldelight)
+ //   alias(libs.plugins.kotlinCocoapods)
 }
 
 kotlin {
-    androidTarget()
+    targetHierarchy.default()
+
+    androidTarget {}
 
     listOf(
         iosX64(),
@@ -21,45 +29,46 @@ kotlin {
     }
 
     sourceSets {
-        androidMain.dependencies {
-            implementation(compose.preview)
-            implementation(libs.androidx.activity.compose)
-            implementation("io.ktor:ktor-client-android:2.3.7")
+        val commonMain by getting {
+            dependencies {
+                implementation(compose.runtime)
+                implementation(compose.foundation)
+                implementation(compose.material3)
+                implementation(compose.ui)
+                implementation(libs.kotlin.coroutines)
+
+                // Koin
+                implementation("io.insert-koin:koin-core:3.5.3")
+                implementation(libs.koin.compose)
+                api(libs.koin.core)
+             //   implementation("ru.pocketbyte.kotlin-uuid:library:0.5.0")
+
+
+                // Ktor
+                implementation(libs.ktor.client.core)
+                implementation(libs.ktor.json.serialization)
+                implementation(libs.ktor.content.negotiation)
+                implementation(libs.ktor.logging)
+                implementation(libs.ktor.client.cio)
+                implementation(libs.ktor.serialization)
+            }
         }
-        commonMain.dependencies {
-            implementation(compose.runtime)
-            implementation(compose.foundation)
-            implementation(compose.material3)
-            implementation(compose.ui)
-            implementation(libs.kotlin.coroutines)
-
-            // Koin
-            implementation("io.insert-koin:koin-compose:4.0.0")
-            implementation("io.insert-koin:koin-compose-viewmodel:4.0.3")
-            // Kotlin Coroutines - Concurrency
-
-            // Koin Core - Dependency Injection
-            api(libs.koin.core)
-           //ktor-client
-            implementation(libs.ktor.client.core)
-            implementation(libs.ktor.json.serialization)
-            implementation(libs.ktor.content.negotiation)
-            implementation(libs.ktor.logging)
-            implementation(libs.ktor.client.cio)
-            implementation(libs.ktor.serialization)
-
-
+        val commonTest by getting {
+            dependencies {
+                implementation(libs.kotlin.test)
+            }
         }
-        commonTest.dependencies {
-            implementation(libs.kotlin.test)
+        val androidMain by getting {
+            dependencies {
+                implementation(compose.preview)
+                implementation(libs.androidx.activity.compose)
+                implementation("io.ktor:ktor-client-android:2.3.7")
+            }
         }
-        iosMain.dependencies {
-            implementation("io.ktor:ktor-client-darwin:2.3.7")
-            // Add explicit dependencies for iOS drawing engine support
-            implementation(compose.ui)
-            implementation(compose.foundation)
-            implementation(compose.material3)
-            implementation(compose.runtime)
+        val iosMain by getting {
+            dependencies {
+                implementation("io.ktor:ktor-client-darwin:2.3.7")
+            }
         }
     }
 }
