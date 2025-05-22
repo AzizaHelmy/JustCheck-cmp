@@ -25,7 +25,6 @@ dependencyResolutionManagement {
             }
         }
         mavenCentral()
-        //maven(url = "https://maven.pkg.jetbrains.space/public/p/kotlinx-uuid/maven") // Required for kotlinx-uuid
     }
 }
 
