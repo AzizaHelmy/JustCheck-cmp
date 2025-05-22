@@ -11,6 +11,7 @@ interface UserRepository {
 class UserRepositoryImpl(
     private val remoteDataSource: UserRemoteDataSource
 ) : UserRepository {
+
     override suspend fun getUsers(): List<RandomUser> {
         return remoteDataSource.getUsers()
     }

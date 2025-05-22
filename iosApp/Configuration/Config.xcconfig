@@ -1,4 +1,4 @@
-TEAM_ID=
+TEAM_ID=YOUR_APPLE_TEAM_ID
 
 PRODUCT_NAME=JustCheck-cmp
 PRODUCT_BUNDLE_IDENTIFIER=org.aziza.project.JustCheck-cmp

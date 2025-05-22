@@ -1,12 +1,8 @@
-import org.jetbrains.compose.desktop.application.dsl.TargetFormat
-import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
-    id("com.google.devtools.ksp") version "1.9.21-1.0.15"
+    // id("com.google.devtools.ksp") version "1.9.21-1.0.15"
     kotlin("plugin.serialization") version "1.9.0"  // Kotlin Serialization Plugin
 }
 
@@ -35,8 +31,6 @@ kotlin {
             implementation(compose.foundation)
             implementation(compose.material3)
             implementation(compose.ui)
-            //implementation(compose.components.resources)
-           // implementation(compose.components.uiToolingPreview)
             implementation(libs.kotlin.coroutines)
 
             // Koin
@@ -46,13 +40,14 @@ kotlin {
 
             // Koin Core - Dependency Injection
             api(libs.koin.core)
-            // CIO Engine (for native/desktop)
-            implementation("io.ktor:ktor-client-cio:2.3.7")
-            // Ktor
-            implementation("io.ktor:ktor-client-core:2.3.7")
-            implementation("io.ktor:ktor-client-content-negotiation:2.3.7")
-            implementation("io.ktor:ktor-serialization-kotlinx-json:2.3.7")
-            implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.2")
+           //ktor-client
+            implementation(libs.ktor.client.core)
+            implementation(libs.ktor.json.serialization)
+            implementation(libs.ktor.content.negotiation)
+            implementation(libs.ktor.logging)
+            implementation(libs.ktor.client.cio)
+            implementation(libs.ktor.serialization)
+
 
         }
         commonTest.dependencies {
@@ -60,6 +55,11 @@ kotlin {
         }
         iosMain.dependencies {
             implementation("io.ktor:ktor-client-darwin:2.3.7")
+            // Add explicit dependencies for iOS drawing engine support
+            implementation(compose.ui)
+            implementation(compose.foundation)
+            implementation(compose.material3)
+            implementation(compose.runtime)
         }
     }
 }
