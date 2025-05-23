@@ -3,7 +3,6 @@ package org.aziza.project.data.source
 import RandomUser
 import RandomUserApiResponse
 import io.ktor.client.HttpClient
-import io.ktor.client.engine.cio.CIO
 import io.ktor.client.plugins.DefaultRequest
 import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
@@ -13,6 +12,7 @@ import io.ktor.client.statement.bodyAsText
 import io.ktor.http.HttpHeaders
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
+import org.aziza.project.getEngine
 
 interface UserRemoteDataSource {
     suspend fun getUsers(): List<RandomUser>
@@ -27,7 +27,7 @@ class UserRemoteDataSourceImpl : UserRemoteDataSource {
         coerceInputValues = true
     }
 
-    private val client = HttpClient(CIO) {
+    private val client = HttpClient(getEngine()) {
         install(ContentNegotiation) {
             json(json)
         }
