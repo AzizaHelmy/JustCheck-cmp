@@ -34,8 +34,9 @@ kotlin {
             implementation(libs.kotlin.coroutines)
 
             // Koin
-            implementation("io.insert-koin:koin-compose:4.0.0")
-            implementation("io.insert-koin:koin-compose-viewmodel:4.0.3")
+            implementation("io.insert-koin:koin-core:3.5.3")
+            implementation(libs.koin.compose)
+
             // Kotlin Coroutines - Concurrency
 
             // Koin Core - Dependency Injection
