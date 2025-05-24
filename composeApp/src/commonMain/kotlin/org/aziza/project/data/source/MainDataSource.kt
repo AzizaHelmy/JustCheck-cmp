@@ -16,15 +16,17 @@ import io.ktor.client.request.header
 import io.ktor.client.statement.bodyAsText
 import io.ktor.http.HttpHeaders
 import io.ktor.serialization.kotlinx.json.json
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import org.aziza.project.getEngine
 
-interface UserRemoteDataSource {
+fun interface IMainDataSource {
     suspend fun getUsers(): List<RandomUser>
-    fun close()
 }
 
-class UserRemoteDataSourceImpl : UserRemoteDataSource {
+class MainDataSource : IMainDataSource {
+
+    @OptIn(ExperimentalSerializationApi::class)
     private val json = Json {
         ignoreUnknownKeys = true
         isLenient = true
@@ -68,8 +70,8 @@ class UserRemoteDataSourceImpl : UserRemoteDataSource {
             emptyList()
         }
     }
-
-    override fun close() {
+//todo: close
+    fun close() {
         client.close()
     }
 } 

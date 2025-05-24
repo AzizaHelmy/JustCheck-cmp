@@ -2,7 +2,6 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
-    // id("com.google.devtools.ksp") version "1.9.21-1.0.15"
     kotlin("plugin.serialization") version "1.9.0"  // Kotlin Serialization Plugin
 }
 
@@ -36,11 +35,8 @@ kotlin {
             // Koin
             implementation("io.insert-koin:koin-core:3.5.3")
             implementation(libs.koin.compose)
-
-            // Kotlin Coroutines - Concurrency
-
-            // Koin Core - Dependency Injection
             api(libs.koin.core)
+
            //ktor-client
             implementation(libs.ktor.client.core)
             implementation(libs.ktor.json.serialization)
@@ -48,6 +44,7 @@ kotlin {
             implementation(libs.ktor.logging)
             implementation(libs.ktor.client.cio)
             implementation(libs.ktor.serialization)
+            api(libs.compose.image.loader)
 
 
         }
@@ -56,7 +53,6 @@ kotlin {
         }
         iosMain.dependencies {
             implementation("io.ktor:ktor-client-darwin:2.3.7")
-            // Add explicit dependencies for iOS drawing engine support
             implementation(compose.ui)
             implementation(compose.foundation)
             implementation(compose.material3)
