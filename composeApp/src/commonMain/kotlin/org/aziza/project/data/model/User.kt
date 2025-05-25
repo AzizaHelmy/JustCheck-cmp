@@ -37,7 +37,6 @@ data class RandomUser(
     val bank: Bank? = null,
     @SerialName("crypto")
     val crypto: Crypto? = null
-    // You can add more fields if you want, but these cover the main ones
 )
 
 @Serializable

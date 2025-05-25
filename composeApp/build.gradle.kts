@@ -2,7 +2,7 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
-    kotlin("plugin.serialization") version "1.9.0"  // Kotlin Serialization Plugin
+    kotlin("plugin.serialization") version "1.9.0"
 }
 
 kotlin {
@@ -23,7 +23,7 @@ kotlin {
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
-            implementation("io.ktor:ktor-client-android:2.3.7")
+            implementation(libs.ktor.client.android)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -33,32 +33,26 @@ kotlin {
             implementation(libs.kotlin.coroutines)
 
             // Koin
-            implementation("io.insert-koin:koin-core:3.5.3")
+            implementation(libs.koin.core)
             implementation(libs.koin.compose)
             api(libs.koin.core)
-
-           //ktor-client
+            // ktor-client
             implementation(libs.ktor.client.core)
             implementation(libs.ktor.json.serialization)
             implementation(libs.ktor.content.negotiation)
             implementation(libs.ktor.logging)
             implementation(libs.ktor.client.cio)
             implementation(libs.ktor.serialization)
-            //api(libs.compose.image.loader)
-
-            implementation("io.coil-kt.coil3:coil-compose:3.0.0-alpha06")
-            implementation("io.coil-kt.coil3:coil-network-ktor:3.0.0-alpha06")
-
-           // implementation("media.kamel:kamel-image-default:1.0.5")
-
-
+            // Coil
+            implementation(libs.coil.compose)
+            implementation(libs.coil.network.ktor)
 
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
         }
         iosMain.dependencies {
-            implementation("io.ktor:ktor-client-darwin:2.3.7")
+            implementation(libs.ktor.client.drawin)
 
             implementation(compose.ui)
             implementation(compose.foundation)

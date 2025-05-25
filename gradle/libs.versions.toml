@@ -10,20 +10,21 @@ androidx-core = "1.16.0"
 androidx-espresso = "3.6.1"
 androidx-lifecycle = "2.8.4"
 androidx-testExt = "1.2.1"
+coilCompose = "3.0.0-alpha06"
 composeMultiplatform = "1.5.11"
 junit = "4.13.2"
 koinCompose = "1.1.5"
-image-loader = "1.6.7"
 kotlin = "1.9.21"
-# Koin - Dependency Injection framework
 koin-version = "3.5.0"
-koinKspVersion = "1.2.2"  # Koin KSP version (Kotlin Symbol Processing)
-koin-compose-version = "1.1.0"
 coroutine-version = "1.7.3"
 ktor-version = "2.3.3"
-google-gson-version = "2.10.1"
-serialization_version = "1.6.0"
+ktorClientAndroid = "2.3.7"
+
+
+
 [libraries]
+coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coilCompose" }
+coil-network-ktor = { module = "io.coil-kt.coil3:coil-network-ktor", version.ref = "coilCompose" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-testJunit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
 junit = { module = "junit:junit", version.ref = "junit" }
@@ -35,23 +36,19 @@ androidx-constraintlayout = { module = "androidx.constraintlayout:constraintlayo
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity" }
 androidx-lifecycle-viewmodel = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel", version.ref = "androidx-lifecycle" }
 androidx-lifecycle-runtimeCompose = { module = "org.jetbrains.androidx.lifecycle:lifecycle-runtime-compose", version.ref = "androidx-lifecycle" }
+
+
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin-version" }  # Koin Core
-koin-annotations = { module = "io.insert-koin:koin-annotations", version.ref = "koinKspVersion" }  # Koin Annotations (KSP)
-koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin-version" }  # Koin Android Integration
-koin-test = { module = "io.insert-koin:koin-test", version.ref = "koin-version" }
 kotlin-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutine-version" }  # Kotlin Coroutines Core
+ktor-client-android = { module = "io.ktor:ktor-client-android", version.ref = "ktorClientAndroid" }
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor-version" }
 ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor-version" }
-ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp-jvm", version.ref = "ktor-version" }
 ktor-client-drawin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor-version" }
-google-code-gson = { module = "com.google.code.gson:gson", version.ref = "google-gson-version" }
 ktor-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor-version" }
 ktor-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor-version" }
 ktor-json-serialization = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor-version" }
 ktor-serialization = { module = "io.ktor:ktor-client-serialization", version.ref = "ktor-version" }
-ktor-gson = { module = "io.ktor:ktor-serialization-gson", version.ref = "ktor-version" }
 koin-compose = { module = "io.insert-koin:koin-compose", version.ref = "koinCompose" }
-compose-image-loader = { module = "io.github.qdsfdhvh:image-loader", version.ref = "image-loader" }
 
 
 [plugins]

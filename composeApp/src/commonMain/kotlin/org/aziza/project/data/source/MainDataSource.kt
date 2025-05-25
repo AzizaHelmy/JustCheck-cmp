@@ -61,7 +61,7 @@ class MainDataSource : IMainDataSource {
         }
 
         install(HttpTimeout) {
-            requestTimeoutMillis = 15000 // 15 ثانية
+            requestTimeoutMillis = 15000
             connectTimeoutMillis = 10000
             socketTimeoutMillis = 15000
         }
@@ -69,7 +69,6 @@ class MainDataSource : IMainDataSource {
         defaultRequest {
             header("Content-Type", "application/json")
             header("Accept-Language", "en")
-            //url("https://randomuser.me/api/")
             url("https://dummyjson.com/users")
         }
         install(DefaultRequest) {

@@ -3,9 +3,6 @@ package org.aziza.project.presentation.screen.home
 import org.aziza.project.domain.model.User
 
 
-/**
- * Created by Aziza Helmy on 31/3/2024.
- */
 data class HomeUiState(
     val isLoading: Boolean = false,
     val isError: String = "",

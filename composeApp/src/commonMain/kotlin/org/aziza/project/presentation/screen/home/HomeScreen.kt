@@ -93,7 +93,7 @@ private fun HomeContent(
                         verticalArrangement = Arrangement.Center
                     ) {
                         Text(
-                            text = state.isError ?: "Unknown error occurred",
+                            text = state.isError,
                             style = MaterialTheme.typography.bodyLarge
                         )
                         Spacer(modifier = Modifier.height(16.dp))
