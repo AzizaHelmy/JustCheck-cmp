@@ -61,15 +61,16 @@ class MainDataSource : IMainDataSource {
         }
 
         install(HttpTimeout) {
-            requestTimeoutMillis = 150000 // 15 ثانية
-            connectTimeoutMillis = 100000
-            socketTimeoutMillis = 150000
+            requestTimeoutMillis = 15000 // 15 ثانية
+            connectTimeoutMillis = 10000
+            socketTimeoutMillis = 15000
         }
 
         defaultRequest {
             header("Content-Type", "application/json")
             header("Accept-Language", "en")
-            url("https://randomuser.me/api/")
+            //url("https://randomuser.me/api/")
+            url("https://dummyjson.com/users")
         }
         install(DefaultRequest) {
             header(HttpHeaders.Accept, "application/json")
@@ -78,7 +79,7 @@ class MainDataSource : IMainDataSource {
 
     override suspend fun getUsers(): List<RandomUser> {
         return try {
-            val response = client.get("https://randomuser.me/api/?results=20")
+            val response = client.get("https://dummyjson.com/users")
             val apiResponse: RandomUserApiResponse = json.decodeFromString(response.bodyAsText())
             apiResponse.results
         } catch (e: Exception) {

@@ -9,9 +9,10 @@ import org.aziza.project.domain.model.User
 
 fun RandomUser.toEntity(): User {
     return User(
-        name = name?.first ?: "",
+        name = firstName ?: "",
         phone = phone ?: "",
-        image = picture?.large ?: "",
+        image = image ?: "",
     )
 }
+
 fun List<RandomUser>.toEntity() = map { it.toEntity() }
