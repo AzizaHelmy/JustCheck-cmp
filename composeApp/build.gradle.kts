@@ -44,7 +44,13 @@ kotlin {
             implementation(libs.ktor.logging)
             implementation(libs.ktor.client.cio)
             implementation(libs.ktor.serialization)
-            api(libs.compose.image.loader)
+            //api(libs.compose.image.loader)
+
+            implementation("io.coil-kt.coil3:coil-compose:3.0.0-alpha06")
+            implementation("io.coil-kt.coil3:coil-network-ktor:3.0.0-alpha06")
+
+           // implementation("media.kamel:kamel-image-default:1.0.5")
+
 
 
         }
@@ -53,6 +59,7 @@ kotlin {
         }
         iosMain.dependencies {
             implementation("io.ktor:ktor-client-darwin:2.3.7")
+
             implementation(compose.ui)
             implementation(compose.foundation)
             implementation(compose.material3)

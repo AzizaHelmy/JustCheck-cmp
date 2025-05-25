@@ -1,6 +1,5 @@
 package org.aziza.project.presentation.screen.home
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -36,8 +35,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
-import com.seiko.imageloader.rememberImagePainter
+import coil3.compose.AsyncImage
 import org.koin.compose.getKoin
 
 @Composable
@@ -146,9 +146,10 @@ fun UserItem(
     ) {
 
         Row(verticalAlignment = Alignment.CenterVertically) {
-            Image(
-                painter = rememberImagePainter(url = image),
+            AsyncImage(
+                model = image,
                 contentDescription = "",
+                contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .padding(16.dp)
                     .size(50.dp).clip(

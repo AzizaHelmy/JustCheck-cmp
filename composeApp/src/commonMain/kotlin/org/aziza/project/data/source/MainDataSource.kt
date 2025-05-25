@@ -4,6 +4,7 @@ import RandomUser
 import RandomUserApiResponse
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.DefaultRequest
+import io.ktor.client.plugins.HttpRequestRetry
 import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.defaultRequest
@@ -16,6 +17,7 @@ import io.ktor.client.request.header
 import io.ktor.client.statement.bodyAsText
 import io.ktor.http.HttpHeaders
 import io.ktor.serialization.kotlinx.json.json
+import io.ktor.utils.io.errors.IOException
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import org.aziza.project.getEngine
@@ -47,9 +49,23 @@ class MainDataSource : IMainDataSource {
                 }
             }
         }
-        install(HttpTimeout) {
-            requestTimeoutMillis = 300_000
+        install(HttpRequestRetry) {
+            maxRetries = 3
+            retryIf { _, response ->
+                response.status.value >= 500
+            }
+            retryOnExceptionIf { _, cause ->
+                cause is IOException || cause.message?.contains("The network connection was lost") == true
+            }
+            delayMillis { retry -> retry * 1000L }
         }
+
+        install(HttpTimeout) {
+            requestTimeoutMillis = 150000 // 15 ثانية
+            connectTimeoutMillis = 100000
+            socketTimeoutMillis = 150000
+        }
+
         defaultRequest {
             header("Content-Type", "application/json")
             header("Accept-Language", "en")
@@ -70,7 +86,8 @@ class MainDataSource : IMainDataSource {
             emptyList()
         }
     }
-//todo: close
+
+    //todo: close
     fun close() {
         client.close()
     }
