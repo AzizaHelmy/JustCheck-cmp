@@ -12,3 +12,18 @@ This is a Kotlin Multiplatform project targeting Android, iOS.
 
 
 Learn more about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html)…
+
+
+## Technologies Used
+
+* Ktor-client for networking
+* Koin for DI
+* Coil for Image Loading
+
+## Screenshots
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/13d735d0-6133-4c09-ab7f-ea54f22d7605" alt="Screenshot 1" width="150" style="border: 5px solid #ccc; border-radius: 15px;">
+
+ <video src="" height = "400"/>
+
+
