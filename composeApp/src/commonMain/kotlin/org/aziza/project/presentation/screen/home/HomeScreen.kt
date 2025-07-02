@@ -38,20 +38,31 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
+import org.aziza.project.sdk.HomeScreenConfig
+import org.aziza.project.sdk.HomeScreenEventListener
 import org.koin.compose.getKoin
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(
+    config: HomeScreenConfig,
+    eventListener: HomeScreenEventListener
+) {
     val viewModel: HomeViewModel = getKoin().get()
     val state by viewModel.state.collectAsState()
 
-    HomeContent(state = state, onRetry = viewModel::loadUsers, onRefresh = viewModel::refresh)
+    HomeContent(
+        title = config.screenTitle,
+        state = state,
+        onRetry = viewModel::loadUsers,
+        onRefresh = viewModel::refresh
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun HomeContent(
     state: HomeUiState,
+    title: String ,
     onRefresh: () -> Unit,
     onRetry: () -> Unit
 ) {
@@ -61,7 +72,7 @@ private fun HomeContent(
             TopAppBar(
                 title = {
                     Text(
-                        " Random Users",
+                      title
                     )
                 },
                 actions = {

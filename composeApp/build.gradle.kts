@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
-    alias(libs.plugins.androidApplication)
+    //alias(libs.plugins.androidApplication)
+    alias(libs.plugins.androidLibrary) //todo:lib
     alias(libs.plugins.composeMultiplatform)
     kotlin("plugin.serialization") version "1.9.0"
 }
@@ -67,11 +68,11 @@ android {
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
-        applicationId = "org.aziza.project"
+        //applicationId = "org.aziza.project" //todo:lib
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
-        versionCode = 1
-        versionName = "1.0"
+        //versionCode = 1 //todo:lib
+        //versionName = "1.0" //todo:lib
     }
     packaging {
         resources {
