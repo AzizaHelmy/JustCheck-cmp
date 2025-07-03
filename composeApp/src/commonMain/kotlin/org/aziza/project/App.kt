@@ -10,14 +10,15 @@ import org.aziza.project.sdk.HomeScreenConfig
 import org.aziza.project.sdk.HomeScreenEventListener
 
 @Composable
-fun App() {
+fun App(config: HomeScreenConfig) {
     remember { initKoin() }
     MaterialTheme {
         HomeScreen(
-            config = HomeScreenConfig(screenTitle = "123abc"),
+            config = config,
             eventListener = object : HomeScreenEventListener {
                 override fun onUserSelected(user: User) {}
                 override fun onRetry() {}
-            })
+            }
+        )
     }
 }

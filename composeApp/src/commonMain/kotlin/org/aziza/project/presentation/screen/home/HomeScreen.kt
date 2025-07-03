@@ -44,7 +44,7 @@ import org.koin.compose.getKoin
 
 @Composable
 fun HomeScreen(
-    config: HomeScreenConfig,
+    config: HomeScreenConfig = HomeScreenConfig(screenTitle = "123abc"),
     eventListener: HomeScreenEventListener
 ) {
     val viewModel: HomeViewModel = getKoin().get()
@@ -62,7 +62,7 @@ fun HomeScreen(
 @Composable
 private fun HomeContent(
     state: HomeUiState,
-    title: String ,
+    title: String,
     onRefresh: () -> Unit,
     onRetry: () -> Unit
 ) {
@@ -72,7 +72,7 @@ private fun HomeContent(
             TopAppBar(
                 title = {
                     Text(
-                      title
+                        title
                     )
                 },
                 actions = {
