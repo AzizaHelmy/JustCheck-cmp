@@ -1,5 +1,6 @@
 package org.aziza.project.presentation.screen.home
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -37,15 +38,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
-import coil3.compose.AsyncImage
+import com.seiko.imageloader.rememberImagePainter
 import org.aziza.project.sdk.HomeScreenConfig
-import org.aziza.project.sdk.HomeScreenEventListener
 import org.koin.compose.getKoin
 
 @Composable
 fun HomeScreen(
     config: HomeScreenConfig = HomeScreenConfig(screenTitle = "123abc"),
-    eventListener: HomeScreenEventListener
 ) {
     val viewModel: HomeViewModel = getKoin().get()
     val state by viewModel.state.collectAsState()
@@ -157,8 +156,8 @@ fun UserItem(
     ) {
 
         Row(verticalAlignment = Alignment.CenterVertically) {
-            AsyncImage(
-                model = image,
+            Image(
+                painter = rememberImagePainter(url = image),
                 contentDescription = "",
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
