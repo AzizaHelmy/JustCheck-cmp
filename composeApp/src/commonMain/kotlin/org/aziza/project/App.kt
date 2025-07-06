@@ -11,8 +11,12 @@ import org.aziza.project.sdk.HomeScreenConfig
 fun App(config: HomeScreenConfig) {
     remember { initKoin() }
     MaterialTheme {
+
+
         HomeScreen(
             config = config
         )
+
+
     }
 }

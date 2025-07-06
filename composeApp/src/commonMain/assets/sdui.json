@@ -1,0 +1,14 @@
+{
+  "type": "screen",
+  "children": [
+    {
+      "type": "text",
+      "text": "Hello SDUI"
+    },
+    {
+      "type": "button",
+      "text": "Click Me",
+      "action": "log_click"
+    }
+  ]
+}

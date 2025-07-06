@@ -1,5 +1,6 @@
 package org.aziza.project
 
+import android.content.Context
 import android.os.Build
 import io.ktor.client.engine.cio.CIO
 
@@ -10,3 +11,6 @@ class AndroidPlatform : Platform {
 actual fun getPlatform(): Platform = AndroidPlatform()
 
 actual fun getEngine() = CIO.create()
+
+actual class PlatformContext(val androidContext: Context)
+
