@@ -1,11 +1,16 @@
 package org.aziza.project.util
 
-import org.aziza.project.PlatformContext
-
 /**
- * Created by Aziza Helmy on 06/07/2025.
+ * Created by Aziza Helmy on 07/07/2025.
  */
 
-//fun PlatformContext.readJsonFromAssets(fileName: String): String {
-//    return assets.open(fileName).bufferedReader().use { it.readText() }
-//}
+
+fun String.toColorInt(): ULong {
+    val colorString = this.removePrefix("#")
+    val color = when (colorString.length) {
+        6 -> "FF$colorString"
+        8 -> colorString
+        else -> throw IllegalArgumentException("Invalid color string: $this")
+    }
+    return color.toULong(16)
+}

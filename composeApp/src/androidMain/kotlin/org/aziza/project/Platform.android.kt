@@ -12,5 +12,3 @@ actual fun getPlatform(): Platform = AndroidPlatform()
 
 actual fun getEngine() = CIO.create()
 
-actual class PlatformContext(val androidContext: Context)
-

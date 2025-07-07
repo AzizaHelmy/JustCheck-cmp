@@ -1,6 +1,5 @@
 package org.aziza.project
 
-import androidx.compose.runtime.Composable
 import io.ktor.client.engine.HttpClientEngine
 
 interface Platform {
@@ -10,6 +9,3 @@ interface Platform {
 
 expect fun getPlatform(): Platform
 expect fun getEngine(): HttpClientEngine
-expect class PlatformContext
-@Composable
-expect fun getPlatformContext(): PlatformContext

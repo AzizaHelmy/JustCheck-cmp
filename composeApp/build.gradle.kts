@@ -1,7 +1,7 @@
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
-    //alias(libs.plugins.androidApplication)
-    alias(libs.plugins.androidLibrary) //todo:lib
+    alias(libs.plugins.androidApplication)
+    //alias(libs.plugins.androidLibrary) //todo:lib
     alias(libs.plugins.composeMultiplatform)
     kotlin("plugin.serialization") version "1.9.0"
 }
@@ -48,8 +48,6 @@ kotlin {
 //            implementation(libs.coil.compose)
 //            implementation(libs.coil.network.ktor)
             api(libs.compose.image.loader)
-            //implementation("media.kamel:kamel-image-default:1.0.5")
-
 
 
         }
@@ -72,7 +70,7 @@ android {
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
-        //applicationId = "org.aziza.project" //todo:lib
+        applicationId = "org.aziza.project" //todo:lib
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
         //versionCode = 1 //todo:lib
