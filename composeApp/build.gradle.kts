@@ -48,6 +48,13 @@ kotlin {
 //            implementation(libs.coil.compose)
 //            implementation(libs.coil.network.ktor)
             api(libs.compose.image.loader)
+            implementation(libs.compose.runtime)  // Jetpack Compose Runtime
+            implementation(libs.compose.foundation)  // Jetpack Compose Foundation
+            implementation(libs.compose.material3)  // Jetpack Compose Material3
+            implementation(libs.compose.materialIconsExtended)  // Jetpack Compose Material Icons Extended
+
+            // Jetpack Compose Components Resources
+            implementation(libs.compose.components.resources)
 
 
         }

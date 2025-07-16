@@ -3,6 +3,7 @@ package org.aziza.project.presentation.screen.sdui
 /**
  * Created by Aziza Helmy on 06/07/2025.
  */
+
 data class SDUIScreen(
     val title: String,
     val components: List<UIComponent>
@@ -16,8 +17,7 @@ sealed class UIComponent {
 data class TextComponent(
     override val id: String,
     val text: String,
-    val fontSize: Int = 16,
-    val color: String = "#000000"
+    val styleType: TextType
 ) : UIComponent() {
     override val type: String = "text"
 }
@@ -26,14 +26,7 @@ data class ButtonComponent(
     override val id: String,
     val text: String,
     val action: String,
-    val width: Int? = null,
-    val height: Int? = null,
-    val textColor: String? = null,
-    val textSize: Int? = null,
-    val backgroundColor: String? = null,
-    val cornerRadius: Int? = null,
-    val borderColor: String? = null,
-    val borderWidth: Int? = null
+    val styleType: ButtonType
 ) : UIComponent() {
     override val type: String = "button"
 }
@@ -42,15 +35,8 @@ data class ImageComponent(
     override val id: String,
     override val type: String = "image",
     val url: String,
-    val contentDescription: String? = null,
-    val width: Int? = null,
-    val height: Int? = null,
-    val shape: String? = null,
-    val borderColor: String? = null,
-    val borderWidth: Int? = null
+    val shapeType: ImageType,
 ) : UIComponent()
-
-
 
 data class CardComponent(
     override val id: String,
@@ -64,4 +50,23 @@ data class ListComponent(
     val items: List<UIComponent>
 ) : UIComponent() {
     override val type: String = "list"
+}
+
+// --- ENUM for Types ---
+enum class TextType {
+    HEAD1, HEAD2, HEAD3, HEAD4, HEAD5, HEAD6,
+    BODY_LARGE_REGULAR, BODY_LARGE_MEDIUM,
+    BODY_MEDIUM_REGULAR, BODY_MEDIUM_MEDIUM,
+    BODY_SMALL_REGULAR, BODY_SMALL_MEDIUM,
+    BODY_XS_BOLD, BODY_XS_MEDIUM
+}
+
+enum class ButtonType {
+    PRIMARY_ENABLED, PRIMARY_DISABLED,
+    SECONDARY_ENABLED, SECONDARY_DISABLED,
+    LINK_ENABLED, SMALL_ENABLED
+}
+
+enum class ImageType {
+    NORMAL,
 }
