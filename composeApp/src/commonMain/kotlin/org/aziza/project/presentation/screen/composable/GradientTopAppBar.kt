@@ -21,9 +21,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import org.aziza.project.presentation.theme.HeadingStyles
 
 /**
  * Created by Aziza Helmy on 16/07/2025.
@@ -46,7 +45,7 @@ fun GradientTopAppBar(
         CenterAlignedTopAppBar(
             title = {
                 Text(
-                    title, fontWeight = FontWeight.Bold, fontSize = 20.sp, color = Color.White
+                    title, style = HeadingStyles.head5Bold(), color = Color.White
                 )
             }, navigationIcon = {
                 IconButton(onClick = onBackPressed) {
@@ -58,7 +57,7 @@ fun GradientTopAppBar(
                 }
             }, colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
                 containerColor = Color.Transparent
-            ), modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp)
+            ), modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp)
         )
     }
 }

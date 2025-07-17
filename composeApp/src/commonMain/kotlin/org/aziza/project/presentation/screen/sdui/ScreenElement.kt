@@ -6,7 +6,13 @@ package org.aziza.project.presentation.screen.sdui
 
 data class SDUIScreen(
     val title: String,
+    val flowId: String? = null,
+    val background: BackgroundImage? = null,
     val components: List<UIComponent>
+)
+
+data class BackgroundImage(
+    val url: String
 )
 
 sealed class UIComponent {
@@ -17,7 +23,9 @@ sealed class UIComponent {
 data class TextComponent(
     override val id: String,
     val text: String,
-    val styleType: TextType
+    val styleType: TextType,
+    val action: Action? = null
+
 ) : UIComponent() {
     override val type: String = "text"
 }
@@ -25,8 +33,8 @@ data class TextComponent(
 data class ButtonComponent(
     override val id: String,
     val text: String,
-    val action: String,
-    val styleType: ButtonType
+    val styleType: ButtonType,
+    val action: Action? = null
 ) : UIComponent() {
     override val type: String = "button"
 }
@@ -36,21 +44,30 @@ data class ImageComponent(
     override val type: String = "image",
     val url: String,
     val shapeType: ImageType,
+    val action: Action? = null
 ) : UIComponent()
 
 data class CardComponent(
     override val id: String,
-    val children: List<UIComponent>
+    val children: List<UIComponent>,
+    val action: Action? = null
 ) : UIComponent() {
     override val type: String = "card"
 }
 
 data class ListComponent(
     override val id: String,
-    val items: List<UIComponent>
+    val items: List<UIComponent>,
+    val action: Action? = null
 ) : UIComponent() {
     override val type: String = "list"
 }
+data class Action(
+    val actionType: String,
+    val screenId: String? = null,
+    val link: String? = null,
+    val parameters: Map<String, String>? = null
+)
 
 // --- ENUM for Types ---
 enum class TextType {
@@ -69,4 +86,12 @@ enum class ButtonType {
 
 enum class ImageType {
     NORMAL,
+}
+enum class ActionType {
+    LINK, SCREEN_ID, API;
+
+    companion object {
+        fun from(value: String?): ActionType? =
+            values().firstOrNull { it.name.equals(value, ignoreCase = true) }
+    }
 }

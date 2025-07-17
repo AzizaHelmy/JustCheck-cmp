@@ -14,3 +14,12 @@ expect fun getEngine(): HttpClientEngine
 
 @Composable
 expect fun fontResources(font: String): Font
+
+expect class PlatformContext
+
+@Composable
+expect fun getPlatformContext(): PlatformContext
+
+expect fun openUrl(context: Any, url: String)
+
+

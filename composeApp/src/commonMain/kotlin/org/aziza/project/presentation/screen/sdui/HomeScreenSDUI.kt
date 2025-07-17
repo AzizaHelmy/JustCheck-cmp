@@ -2,7 +2,10 @@ package org.aziza.project.presentation.screen.sdui
 
 import Colors
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -28,6 +31,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.seiko.imageloader.rememberImagePainter
+import org.aziza.project.getPlatformContext
+import org.aziza.project.openUrl
 import org.aziza.project.presentation.screen.composable.AppScaffold
 import org.aziza.project.presentation.theme.BodyStyles
 import org.aziza.project.presentation.theme.ButtonStyles
@@ -44,26 +49,43 @@ fun HomeScreenSDUI() {
     val screen = remember { parseSDUIScreen(sduiJson) }
 
     AppScaffold(screenTitle = screen.title) {
-        LazyColumn(
-            modifier = Modifier.fillMaxSize().padding(horizontal = 16.dp, vertical = 16.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            contentPadding = PaddingValues(bottom = 32.dp)
-        ) {
-            item {
-                Card(
-                    modifier = Modifier.fillMaxWidth().wrapContentHeight(),
-                    shape = RoundedCornerShape(16.dp),
-                    elevation = CardDefaults.cardElevation(4.dp),
-                    colors = CardDefaults.cardColors(containerColor = Color.White)
-                ) {
-                    Column(
-                        modifier = Modifier.padding(16.dp),
-                        verticalArrangement = Arrangement.spacedBy(8.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally
+        Box(modifier = Modifier.fillMaxSize()) {
+            // Background image if available
+            screen.background?.let { bg ->
+                Image(
+                    painter = rememberImagePainter(bg.url),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .fillMaxSize(),
+                    contentScale = ContentScale.Crop
+                )
+            }
+
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(horizontal = 16.dp, vertical = 16.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                contentPadding = PaddingValues(bottom = 32.dp)
+            ) {
+                item {
+                    Card(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .wrapContentHeight(),
+                        shape = RoundedCornerShape(16.dp),
+                        elevation = CardDefaults.cardElevation(4.dp),
+                        colors = CardDefaults.cardColors(containerColor = Color.White)
                     ) {
-                        screen.components.forEach { component ->
-                            RenderUIComponent(component)
+                        Column(
+                            modifier = Modifier.padding(16.dp),
+                            verticalArrangement = Arrangement.spacedBy(4.dp),
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            screen.components.forEach { component ->
+                                RenderUIComponent(component)
+                            }
                         }
                     }
                 }
@@ -106,7 +128,7 @@ fun SDUIText(component: TextComponent) {
     }
 
     Text(
-        color = if (textStyle == BodyStyles.mediumRegular())//todo: Discuss
+        color = if (textStyle == BodyStyles.mediumRegular() || textStyle == BodyStyles.smallRegular())//todo: Discuss
             Colors().naturalColor.naturalGray600
         else Colors().naturalColor.naturalGrayDefault,
         text = component.text,
@@ -118,9 +140,28 @@ fun SDUIText(component: TextComponent) {
 
 @Composable
 fun SDUIButton(component: ButtonComponent) {
+    val shape = RoundedCornerShape(24.dp)
+
     val isEnabled = when (component.styleType) {
         ButtonType.PRIMARY_DISABLED, ButtonType.SECONDARY_DISABLED -> false
         else -> true
+    }
+
+    val baseModifier = Modifier.padding(8.dp).height(48.dp).fillMaxWidth()
+
+    val (borderColor, textColor) = when (component.styleType) {
+        ButtonType.SECONDARY_ENABLED -> Color.Black to Color.Black
+        ButtonType.SECONDARY_DISABLED -> Color.Gray to Color.Gray
+        else -> Color.Transparent to Color.Unspecified
+    }
+
+    val modifier = when (component.styleType) {
+        ButtonType.SECONDARY_ENABLED, ButtonType.SECONDARY_DISABLED -> {
+            baseModifier.border(width = 1.dp, color = borderColor, shape = shape)
+                .background(Color.White, shape)
+        }
+
+        else -> baseModifier
     }
 
     val colors = when (component.styleType) {
@@ -130,20 +171,24 @@ fun SDUIButton(component: ButtonComponent) {
         )
 
         ButtonType.PRIMARY_DISABLED -> ButtonDefaults.buttonColors(
-            containerColor = Colors().naturalColor.naturalGray200
+            containerColor = Colors().naturalColor.naturalGray200,
+            contentColor = Color.White,
+            disabledContentColor = Colors().naturalColor.naturalGray400
         )
 
         ButtonType.SECONDARY_ENABLED, ButtonType.SECONDARY_DISABLED -> ButtonDefaults.buttonColors(
-            containerColor = MaterialTheme.colorScheme.secondary
+            containerColor = Color.Transparent,
+            disabledContainerColor = Color.Transparent,
+            contentColor = textColor,
+            disabledContentColor = textColor
         )
 
         ButtonType.LINK_ENABLED -> ButtonDefaults.buttonColors(containerColor = Color.Transparent)
         ButtonType.SMALL_ENABLED -> ButtonDefaults.buttonColors(
-            containerColor = MaterialTheme.colorScheme.primary.copy(
-                alpha = 0.8f
-            )
+            containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.8f)
         )
     }
+
 
     val textStyle = when (component.styleType) {
         ButtonType.PRIMARY_ENABLED, ButtonType.PRIMARY_DISABLED -> ButtonStyles.normalBold()
@@ -152,23 +197,25 @@ fun SDUIButton(component: ButtonComponent) {
         ButtonType.LINK_ENABLED -> ButtonStyles.linkMediumMedium()
         ButtonType.SMALL_ENABLED -> ButtonStyles.smallMedium()
     }
-
+    val context = getPlatformContext()
     Button(
         onClick = {
-            if (component.action == "log_click") println("Button clicked!")
+            component.action?.let {
+                println("Clicked!!")
+                handleAction(context, it) }
         },
         enabled = isEnabled,
         colors = colors,
-        modifier = Modifier.padding(8.dp).height(48.dp).fillMaxWidth(),
-        shape = RoundedCornerShape(24.dp)
+        shape = shape,
+        modifier = modifier,
+        contentPadding = PaddingValues()
     ) {
         Text(
-            text = component.text,
-
-            style = textStyle
+            text = component.text, style = textStyle
         )
     }
 }
+
 
 @Composable
 fun SDUIImage(component: ImageComponent) {
@@ -204,5 +251,39 @@ private fun SDUICard(component: CardComponent) {
         }
     }
 }
+
+
+fun handleAction(context: Any, action: Action) {
+    when (ActionType.from(action.actionType)) {
+        ActionType.LINK -> {
+            val url = action.link
+            if (!url.isNullOrBlank()) {
+                println("yes! $url")
+                openUrl(context, url)
+            }
+        }
+
+        ActionType.SCREEN_ID -> {
+            val screenId = action.screenId
+            val extras = action.parameters ?: emptyMap()
+            if (!screenId.isNullOrBlank()) {
+                // navigateToScreen(screenId, extras)
+            }
+        }
+
+        ActionType.API -> {
+            val params = action.parameters ?: emptyMap()
+            // callSubmitApi(params)
+        }
+
+        null -> {
+            // Unknown action type
+            println("Unknown action type: ${action.actionType}")
+        }
+    }
+}
+
+
+
 
 
