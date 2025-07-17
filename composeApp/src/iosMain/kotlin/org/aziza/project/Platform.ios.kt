@@ -58,11 +58,21 @@ actual fun openUrl(context: Any, url: String) {
     val nsUrl = NSURL.URLWithString(finalUrl)
     if (nsUrl != null) {
         dispatch_async(dispatch_get_main_queue()) {
-            UIApplication.sharedApplication.openURL(nsUrl)
+            UIApplication.sharedApplication.openURLSafely(nsUrl)
         }
     } else {
         println("Unable to open URL: invalid format")
     }
 }
+
+// Helper to safely call the non-deprecated API
+fun UIApplication.openURLSafely(url: NSURL) {
+    this.openURL(
+        url,
+        options = emptyMap<Any?, Any?>(),
+        completionHandler = null
+    )
+}
+
 
 
