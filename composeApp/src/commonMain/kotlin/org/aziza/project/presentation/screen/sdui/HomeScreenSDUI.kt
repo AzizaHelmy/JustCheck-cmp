@@ -98,16 +98,16 @@ fun HomeScreenSDUI() {
 @Composable
 fun RenderUIComponent(component: UIComponent) {
     when (component) {
-        is TextComponent -> SDUIText(component)
-        is ButtonComponent -> SDUIButton(component)
-        is ImageComponent -> SDUIImage(component)
-        is ListComponent -> SDUILazyColumn(component)
-        is CardComponent -> SDUICard(component)
+        is TextComponent -> TextSDUI(component)
+        is ButtonComponent -> ButtonSDUI(component)
+        is ImageComponent -> ImageSDUI(component)
+        is ListComponent -> LazyColumnSDUI(component)
+        is CardComponent -> CardSDUI(component)
     }
 }
 
 @Composable
-fun SDUIText(component: TextComponent) {
+fun TextSDUI(component: TextComponent) {
     val textStyle = when (component.styleType) {
         TextType.HEAD1 -> HeadingStyles.head1Bold()
         TextType.HEAD2 -> HeadingStyles.head2Bold()
@@ -127,9 +127,10 @@ fun SDUIText(component: TextComponent) {
 
     }
 
-    Text(
-        color = if (textStyle == BodyStyles.mediumRegular() || textStyle == BodyStyles.smallRegular())//todo: Discuss
-            Colors().naturalColor.naturalGray600
+    Text(//todo: Discuss
+        color = if (textStyle == BodyStyles.mediumRegular()
+            || textStyle == BodyStyles.smallRegular()
+        ) Colors().naturalColor.naturalGray600
         else Colors().naturalColor.naturalGrayDefault,
         text = component.text,
         style = textStyle,
@@ -139,7 +140,7 @@ fun SDUIText(component: TextComponent) {
 }
 
 @Composable
-fun SDUIButton(component: ButtonComponent) {
+fun ButtonSDUI(component: ButtonComponent) {
     val shape = RoundedCornerShape(24.dp)
 
     val isEnabled = when (component.styleType) {
@@ -201,8 +202,8 @@ fun SDUIButton(component: ButtonComponent) {
     Button(
         onClick = {
             component.action?.let {
-                println("Clicked!!")
-                handleAction(context, it) }
+                handleAction(context, it)
+            }
         },
         enabled = isEnabled,
         colors = colors,
@@ -218,7 +219,7 @@ fun SDUIButton(component: ButtonComponent) {
 
 
 @Composable
-fun SDUIImage(component: ImageComponent) {
+fun ImageSDUI(component: ImageComponent) {
     val modifier = when (component.shapeType) {
         ImageType.NORMAL -> Modifier.fillMaxWidth().height(260.dp).padding(8.dp)
     }
@@ -231,14 +232,14 @@ fun SDUIImage(component: ImageComponent) {
 }
 
 @Composable
-private fun SDUILazyColumn(component: ListComponent) {
+private fun LazyColumnSDUI(component: ListComponent) {
     component.items.forEach { item ->
         RenderUIComponent(item)
     }
 }
 
 @Composable
-private fun SDUICard(component: CardComponent) {
+private fun CardSDUI(component: CardComponent) {
     Card(
         modifier = Modifier.fillMaxWidth().padding(8.dp),
         shape = RoundedCornerShape(12.dp),
@@ -258,7 +259,6 @@ fun handleAction(context: Any, action: Action) {
         ActionType.LINK -> {
             val url = action.link
             if (!url.isNullOrBlank()) {
-                println("yes! $url")
                 openUrl(context, url)
             }
         }
