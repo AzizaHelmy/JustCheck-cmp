@@ -31,9 +31,9 @@ val sduiJson = """
       "id": "button_primary_enabled",
       "data": "Subscribe",
       "action": {
-        "actionType": "link",
-        "screenId": "optional if type is screenId",
-        "link": "https://www.eand.com.eg/StaticFiles/portal2/etisalat/index.html",
+        "actionType": "api",
+        "screenId": "",
+        "link": "",
         "parameters": {
           "param1": "value1",
           "param2": "value2"

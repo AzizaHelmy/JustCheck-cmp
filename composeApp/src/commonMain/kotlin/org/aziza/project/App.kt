@@ -11,7 +11,10 @@ import org.aziza.project.sdk.HomeScreenConfig
 fun App(config: HomeScreenConfig) {
     remember { initKoin() }
     MaterialTheme {
-        HomeScreenSDUI()
+        HomeScreenSDUI { screenId, extras ->
+            println("Screen Id:$screenId")
+            println("Extras:$extras")
+        }
         // HomeScreen(config = config)
     }
 }

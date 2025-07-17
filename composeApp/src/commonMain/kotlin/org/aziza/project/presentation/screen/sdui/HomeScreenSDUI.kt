@@ -45,18 +45,19 @@ import org.aziza.project.presentation.theme.HeadingStyles
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreenSDUI() {
+fun HomeScreenSDUI(
+    onNavigateToScreen: (screenId: String, extras: Map<String, String>) -> Unit
+) {
     val screen = remember { parseSDUIScreen(sduiJson) }
 
     AppScaffold(screenTitle = screen.title) {
         Box(modifier = Modifier.fillMaxSize()) {
-            // Background image if available
+            // Background image
             screen.background?.let { bg ->
                 Image(
                     painter = rememberImagePainter(bg.url),
                     contentDescription = null,
-                    modifier = Modifier
-                        .fillMaxSize(),
+                    modifier = Modifier.fillMaxSize(),
                     contentScale = ContentScale.Crop
                 )
             }
@@ -84,7 +85,7 @@ fun HomeScreenSDUI() {
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
                             screen.components.forEach { component ->
-                                RenderUIComponent(component)
+                                RenderUIComponent(component, onNavigateToScreen)
                             }
                         }
                     }
@@ -96,15 +97,19 @@ fun HomeScreenSDUI() {
 
 
 @Composable
-fun RenderUIComponent(component: UIComponent) {
+fun RenderUIComponent(
+    component: UIComponent,
+    onNavigateToScreen: (screenId: String, extras: Map<String, String>) -> Unit = { _, _ -> }
+) {
     when (component) {
         is TextComponent -> TextSDUI(component)
-        is ButtonComponent -> ButtonSDUI(component)
+        is ButtonComponent -> ButtonSDUI(component, onNavigateToScreen)
         is ImageComponent -> ImageSDUI(component)
         is ListComponent -> LazyColumnSDUI(component)
         is CardComponent -> CardSDUI(component)
     }
 }
+
 
 @Composable
 fun TextSDUI(component: TextComponent) {
@@ -140,8 +145,12 @@ fun TextSDUI(component: TextComponent) {
 }
 
 @Composable
-fun ButtonSDUI(component: ButtonComponent) {
+fun ButtonSDUI(
+    component: ButtonComponent,
+    onNavigateToScreen: (screenId: String, extras: Map<String, String>) -> Unit
+) {
     val shape = RoundedCornerShape(24.dp)
+    val context = getPlatformContext()
 
     val isEnabled = when (component.styleType) {
         ButtonType.PRIMARY_DISABLED, ButtonType.SECONDARY_DISABLED -> false
@@ -149,7 +158,6 @@ fun ButtonSDUI(component: ButtonComponent) {
     }
 
     val baseModifier = Modifier.padding(8.dp).height(48.dp).fillMaxWidth()
-
     val (borderColor, textColor) = when (component.styleType) {
         ButtonType.SECONDARY_ENABLED -> Color.Black to Color.Black
         ButtonType.SECONDARY_DISABLED -> Color.Gray to Color.Gray
@@ -190,19 +198,17 @@ fun ButtonSDUI(component: ButtonComponent) {
         )
     }
 
-
     val textStyle = when (component.styleType) {
         ButtonType.PRIMARY_ENABLED, ButtonType.PRIMARY_DISABLED -> ButtonStyles.normalBold()
-
         ButtonType.SECONDARY_ENABLED, ButtonType.SECONDARY_DISABLED -> ButtonStyles.normalRegular()
         ButtonType.LINK_ENABLED -> ButtonStyles.linkMediumMedium()
         ButtonType.SMALL_ENABLED -> ButtonStyles.smallMedium()
     }
-    val context = getPlatformContext()
+
     Button(
         onClick = {
             component.action?.let {
-                handleAction(context, it)
+                handleAction(context, it, onNavigateToScreen)
             }
         },
         enabled = isEnabled,
@@ -212,7 +218,8 @@ fun ButtonSDUI(component: ButtonComponent) {
         contentPadding = PaddingValues()
     ) {
         Text(
-            text = component.text, style = textStyle
+            text = component.text,
+            style = textStyle
         )
     }
 }
@@ -254,7 +261,11 @@ private fun CardSDUI(component: CardComponent) {
 }
 
 
-fun handleAction(context: Any, action: Action) {
+fun handleAction(
+    context: Any,
+    action: Action,
+    onNavigateToScreen: (screenId: String, extras: Map<String, String>) -> Unit
+) {
     when (ActionType.from(action.actionType)) {
         ActionType.LINK -> {
             val url = action.link
@@ -267,7 +278,7 @@ fun handleAction(context: Any, action: Action) {
             val screenId = action.screenId
             val extras = action.parameters ?: emptyMap()
             if (!screenId.isNullOrBlank()) {
-                // navigateToScreen(screenId, extras)
+                onNavigateToScreen(screenId, extras)
             }
         }
 
@@ -277,11 +288,11 @@ fun handleAction(context: Any, action: Action) {
         }
 
         null -> {
-            // Unknown action type
             println("Unknown action type: ${action.actionType}")
         }
     }
 }
+
 
 
 
