@@ -17,7 +17,6 @@ data class BackgroundImage(
 
 sealed class UIComponent {
     abstract val id: String
-    abstract val type: String
 }
 
 data class TextComponent(
@@ -26,22 +25,17 @@ data class TextComponent(
     val styleType: TextType,
     val action: Action? = null
 
-) : UIComponent() {
-    override val type: String = "text"
-}
+) : UIComponent()
 
 data class ButtonComponent(
     override val id: String,
     val text: String,
     val styleType: ButtonType,
     val action: Action? = null
-) : UIComponent() {
-    override val type: String = "button"
-}
+) : UIComponent()
 
 data class ImageComponent(
     override val id: String,
-    override val type: String = "image",
     val url: String,
     val shapeType: ImageType,
     val action: Action? = null
@@ -51,17 +45,14 @@ data class CardComponent(
     override val id: String,
     val children: List<UIComponent>,
     val action: Action? = null
-) : UIComponent() {
-    override val type: String = "card"
-}
+) : UIComponent()
 
 data class ListComponent(
     override val id: String,
     val items: List<UIComponent>,
     val action: Action? = null
-) : UIComponent() {
-    override val type: String = "list"
-}
+) : UIComponent()
+
 data class Action(
     val actionType: String,
     val screenId: String? = null,
@@ -87,11 +78,12 @@ enum class ButtonType {
 enum class ImageType {
     NORMAL,
 }
+
 enum class ActionType {
     LINK, SCREEN_ID, API;
 
     companion object {
         fun from(value: String?): ActionType? =
-            values().firstOrNull { it.name.equals(value, ignoreCase = true) }
+            ActionType.entries.firstOrNull { it.name.equals(value, ignoreCase = true) }
     }
 }

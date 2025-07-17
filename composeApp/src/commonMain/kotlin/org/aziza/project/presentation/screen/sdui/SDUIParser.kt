@@ -12,28 +12,23 @@ val sduiJson = """
   "flowId": "generalOffer",
   "components": [
     {
-      "type": "image_normal",
-      "id": "image1",
+      "id": "image_normal",
       "data": "https://www.usetiful.com/build/images/web/feature8.png"
     },
     {
-      "type": "text_head4",
-      "id": "text1",
+      "id": "text_head4",
       "data": "Win 1 GB per GoalGoal GoalGoal GoalGoal GoalGoalGoalGoal! 🇪🇬"
     },
     {
-      "type": "text_body_medium_regular",
-      "id": "text2",
+      "id": "text_body_medium_regular",
       "data": "Hello SDUI!, I'm just trying to add a long text to check how it will be displaying!"
     },
     {
-      "type": "text_body_small_regular",
-      "id": "text3",
+      "id": "text_body_small_regular",
       "data": "valid till 20/9/2025"
     },
     {
-      "type": "button_primary_enabled",
-      "id": "b2",
+      "id": "button_primary_enabled",
       "data": "Subscribe",
       "action": {
         "actionType": "link",
@@ -77,12 +72,11 @@ fun parseSDUIScreen(json: String): SDUIScreen {
 
 
 fun parseUIComponent(obj: JsonObject): UIComponent {
-    val type = obj["type"]?.jsonPrimitive?.content ?: throw IllegalArgumentException("Missing type")
-    val id = obj["id"]?.jsonPrimitive?.content ?: ""
+    val id = obj["id"]?.jsonPrimitive?.content ?: throw IllegalArgumentException("Missing type")
 
     return when {
-        type.startsWith("text_") -> {
-            val style = type.removePrefix("text_").lowercase().replace("-", "_")
+        id.startsWith("text_") -> {
+            val style = id.removePrefix("text_").lowercase().replace("-", "_")
             TextComponent(
                 id = id,
                 text = obj["data"]?.jsonPrimitive?.content ?: "",
@@ -90,8 +84,8 @@ fun parseUIComponent(obj: JsonObject): UIComponent {
             )
         }
 
-        type.startsWith("button_") -> {
-            val style = type.removePrefix("button_").uppercase()
+        id.startsWith("button_") -> {
+            val style = id.removePrefix("button_").uppercase()
             val actionObj = obj["action"]?.jsonObject
             val action = actionObj?.let {
                 Action(
@@ -112,7 +106,7 @@ fun parseUIComponent(obj: JsonObject): UIComponent {
             )
         }
 
-        type == "image_normal" -> ImageComponent(
+        id == "image_normal" -> ImageComponent(
             id = id,
             url = obj["data"]?.jsonPrimitive?.content ?: "",
             shapeType = ImageType.valueOf(
@@ -121,7 +115,7 @@ fun parseUIComponent(obj: JsonObject): UIComponent {
         )
 
 
-        type == "list" -> {
+        id == "list" -> {
             val itemsArray = obj["items"]?.jsonArray ?: JsonArray(emptyList())
             val items = itemsArray.map { parseUIComponent(it.jsonObject) }
             ListComponent(
@@ -130,7 +124,7 @@ fun parseUIComponent(obj: JsonObject): UIComponent {
             )
         }
 
-        type == "card" -> {
+        id == "card" -> {
             val childrenArray = obj["children"]?.jsonArray ?: JsonArray(emptyList())
             val children = childrenArray.map { parseUIComponent(it.jsonObject) }
             CardComponent(
@@ -139,7 +133,7 @@ fun parseUIComponent(obj: JsonObject): UIComponent {
             )
         }
 
-        else -> throw IllegalArgumentException("Unknown type: $type")
+        else -> throw IllegalArgumentException("Unknown type: $id")
     }
 }
 
