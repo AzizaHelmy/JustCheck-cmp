@@ -1,11 +1,51 @@
 package org.aziza.project.presentation.screen.sdui_v2
 
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.KSerializer
+import kotlinx.serialization.descriptors.SerialDescriptor
+import kotlinx.serialization.descriptors.buildClassSerialDescriptor
+import kotlinx.serialization.descriptors.listSerialDescriptor
+import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.encoding.Encoder
+import kotlinx.serialization.json.JsonArray
+import kotlinx.serialization.json.JsonDecoder
+import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.decodeFromJsonElement
+import kotlinx.serialization.json.jsonPrimitive
 
 /**
  * Created by Aziza Helmy on 06/08/2025.
  */
 
+// --- Generic helper to accept either a single object or a list ---
+private class ListOrSingleSerializer<T>(
+    private val elementSerializer: KSerializer<T>
+) : KSerializer<List<T>> {
+    override val descriptor: SerialDescriptor = listSerialDescriptor(elementSerializer.descriptor)
+
+    override fun deserialize(decoder: Decoder): List<T> {
+        val input = decoder as? JsonDecoder
+            ?: throw IllegalStateException("ListOrSingleSerializer only works with JSON")
+        val element: JsonElement = input.decodeJsonElement()
+        return when (element) {
+            is JsonArray -> element.map { input.json.decodeFromJsonElement(elementSerializer, it) }
+            is JsonObject -> listOf(input.json.decodeFromJsonElement(elementSerializer, element))
+            else -> emptyList()
+        }
+    }
+
+    override fun serialize(encoder: Encoder, value: List<T>) {
+        // Simple array serialization
+        val jsonEncoder = encoder as? JsonDecoder
+        // Fallback to default list serialization by encoding the array manually is omitted for brevity
+        throw NotImplementedError("Serialization not needed for this use-case")
+    }
+}
+
+private object ProductListSerializer : KSerializer<List<Product>> by ListOrSingleSerializer(Product.serializer())
+private object SubProductListSerializer : KSerializer<List<SubProduct>> by ListOrSingleSerializer(SubProduct.serializer())
+private object AttributeListSerializer : KSerializer<List<Attribute>> by ListOrSingleSerializer(Attribute.serializer())
 
 // --- Data Classes for the JSON Structure ---
 
@@ -59,6 +99,7 @@ data class Category(
 
 @Serializable
 data class Products(
+    @Serializable(with = ProductListSerializer::class)
     val product: List<Product>
 )
 
@@ -91,6 +132,7 @@ data class Operation(
 
 @Serializable
 data class SubProducts(
+    @Serializable(with = SubProductListSerializer::class)
     val subProduct: List<SubProduct>
 )
 
@@ -118,6 +160,7 @@ data class Parameter(
 
 @Serializable
 data class SubProductAttributes(
+    @Serializable(with = AttributeListSerializer::class)
     val attribute: List<Attribute>
 )
 
