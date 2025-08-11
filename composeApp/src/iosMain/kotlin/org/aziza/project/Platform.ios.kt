@@ -3,13 +3,8 @@ package org.aziza.project
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ProvidableCompositionLocal
 import androidx.compose.ui.interop.LocalUIViewController
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.platform.Font
 import io.ktor.client.engine.HttpClientEngine
 import io.ktor.client.engine.darwin.Darwin
-import kotlinx.coroutines.runBlocking
-import org.jetbrains.compose.resources.ExperimentalResourceApi
-import org.jetbrains.compose.resources.resource
 import platform.Foundation.NSLog
 import platform.Foundation.NSURL
 import platform.UIKit.UIApplication
@@ -29,19 +24,6 @@ class IOSPlatform: Platform {
 actual fun getPlatform(): Platform = IOSPlatform()
 
 actual fun getEngine(): HttpClientEngine = Darwin.create()
-
-@OptIn(ExperimentalResourceApi::class)
-@Composable
-
-actual fun fontResources(font: String): Font {
-    val cache: MutableMap<String, Font> = mutableMapOf()
-    return cache.getOrPut(font) {
-        val byteArray = runBlocking {
-            resource("font/$font.ttf").readBytes()
-        }
-        Font(font, byteArray)
-    }
-}
 
 actual class PlatformContext(val iosController: ProvidableCompositionLocal<UIViewController>)
 
