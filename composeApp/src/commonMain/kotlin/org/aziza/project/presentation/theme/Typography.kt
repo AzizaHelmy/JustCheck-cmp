@@ -5,7 +5,11 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
-import org.aziza.project.fontResources
+import justcheck_cmp.composeapp.generated.resources.Res
+import justcheck_cmp.composeapp.generated.resources.sf_pro_display_bold
+import justcheck_cmp.composeapp.generated.resources.sf_pro_display_medium
+import justcheck_cmp.composeapp.generated.resources.sf_pro_display_regular
+import org.jetbrains.compose.resources.Font
 
 /**
  * Created by Aziza Helmy on 16/07/2025.
@@ -38,7 +42,7 @@ fun buildTextStyle(
 object HeadingStyles {
     @Composable
     fun head1Bold() = buildTextStyle(
-        fontFamily = FontFamily(fontResources("sf_pro_display_bold")),
+        fontFamily = FontFamily(Font(Res.font.sf_pro_display_bold)),
         fontWeight = FontWeight.Bold,
         fontSize = 32,
         lineHeight = 40
@@ -46,7 +50,7 @@ object HeadingStyles {
 
     @Composable
     fun head2Bold() = buildTextStyle(
-        fontFamily = FontFamily(fontResources("sf_pro_display_bold")),
+        fontFamily = FontFamily(Font(Res.font.sf_pro_display_bold)),
         fontWeight = FontWeight.Bold,
         fontSize = 28,
         lineHeight = 38
@@ -54,7 +58,7 @@ object HeadingStyles {
 
     @Composable
     fun head3Bold() = buildTextStyle(
-        fontFamily = FontFamily(fontResources("sf_pro_display_bold")),
+        fontFamily = FontFamily(Font(Res.font.sf_pro_display_bold)),
         fontWeight = FontWeight.Bold,
         fontSize = 24,
         lineHeight = 32
@@ -62,7 +66,7 @@ object HeadingStyles {
 
     @Composable
     fun head4Bold() = buildTextStyle(
-        fontFamily = FontFamily(fontResources("sf_pro_display_bold")),
+        fontFamily = FontFamily(Font(Res.font.sf_pro_display_bold)),
         fontWeight = FontWeight.Bold,
         fontSize = 20,
         lineHeight = 28
@@ -70,7 +74,7 @@ object HeadingStyles {
 
     @Composable
     fun head5Bold() = buildTextStyle(
-        fontFamily = FontFamily(fontResources("sf_pro_display_bold")),
+        fontFamily = FontFamily(Font(Res.font.sf_pro_display_bold)),
         fontWeight = FontWeight.Bold,
         fontSize = 18,
         lineHeight = 24
@@ -78,7 +82,7 @@ object HeadingStyles {
 
     @Composable
     fun head6Bold() = buildTextStyle(
-        fontFamily = FontFamily(fontResources("sf_pro_display_bold")),
+        fontFamily = FontFamily(Font(Res.font.sf_pro_display_bold)),
         fontWeight = FontWeight.Bold,
         fontSize = 16,
         lineHeight = 20
@@ -88,7 +92,7 @@ object HeadingStyles {
 object ButtonStyles {
     @Composable
     fun normalBold() = buildTextStyle(
-        fontFamily = FontFamily(fontResources("sf_pro_display_bold")),
+        fontFamily = FontFamily(Font(Res.font.sf_pro_display_bold)),
         fontWeight = FontWeight.Bold,
         fontSize = 18,
         lineHeight = 24
@@ -96,7 +100,7 @@ object ButtonStyles {
 
     @Composable
     fun normalRegular() = buildTextStyle(
-        fontFamily = FontFamily(fontResources("sf_pro_display_regular")),
+        fontFamily = FontFamily(Font(Res.font.sf_pro_display_regular)),
         fontWeight = FontWeight.Normal,
         fontSize = 18,
         lineHeight = 24
@@ -104,7 +108,7 @@ object ButtonStyles {
 
     @Composable
     fun linkNormalMedium() = buildTextStyle(
-        fontFamily = FontFamily(fontResources("sf_pro_display_medium")),
+        fontFamily = FontFamily(Font(Res.font.sf_pro_display_medium)),
         fontWeight = FontWeight.Medium,
         fontSize = 18,
         lineHeight = 24
@@ -112,7 +116,7 @@ object ButtonStyles {
 
     @Composable
     fun linkMediumRegular() = buildTextStyle(
-        fontFamily = FontFamily(fontResources("sf_pro_display_regular")),
+        fontFamily = FontFamily(Font(Res.font.sf_pro_display_regular)),
         fontWeight = FontWeight.Normal,
         fontSize = 16,
         lineHeight = 20
@@ -120,7 +124,7 @@ object ButtonStyles {
 
     @Composable
     fun linkMediumBold() = buildTextStyle(
-        fontFamily = FontFamily(fontResources("sf_pro_display_bold")),
+        fontFamily = FontFamily(Font(Res.font.sf_pro_display_bold)),
         fontWeight = FontWeight.Bold,
         fontSize = 16,
         lineHeight = 20
@@ -128,7 +132,7 @@ object ButtonStyles {
 
     @Composable
     fun linkMediumMedium() = buildTextStyle(
-        fontFamily = FontFamily(fontResources("sf_pro_display_medium")),
+        fontFamily = FontFamily(Font(Res.font.sf_pro_display_medium)),
         fontWeight = FontWeight.Medium,
         fontSize = 16,
         lineHeight = 20
@@ -136,7 +140,7 @@ object ButtonStyles {
 
     @Composable
     fun smallBold() = buildTextStyle(
-        fontFamily = FontFamily(fontResources("sf_pro_display_bold")),
+        fontFamily = FontFamily(Font(Res.font.sf_pro_display_bold)),
         fontWeight = FontWeight.Bold,
         fontSize = 14,
         lineHeight = 16
@@ -144,7 +148,7 @@ object ButtonStyles {
 
     @Composable
     fun smallRegular() = buildTextStyle(
-        fontFamily = FontFamily(fontResources("sf_pro_display_regular")),
+        fontFamily = FontFamily(Font(Res.font.sf_pro_display_regular)),
         fontWeight = FontWeight.Normal,
         fontSize = 14,
         lineHeight = 16
@@ -152,7 +156,7 @@ object ButtonStyles {
 
     @Composable
     fun smallMedium() = buildTextStyle(
-        fontFamily = FontFamily(fontResources("sf_pro_display_medium")),
+        fontFamily = FontFamily(Font(Res.font.sf_pro_display_medium)),
         fontWeight = FontWeight.Medium,
         fontSize = 14,
         lineHeight = 16
@@ -162,7 +166,7 @@ object ButtonStyles {
 object BodyStyles {
     @Composable
     fun largeRegular() = buildTextStyle(
-        fontFamily = FontFamily(fontResources("sf_pro_display_regular")),
+        fontFamily = FontFamily(Font(Res.font.sf_pro_display_regular)),
         fontWeight = FontWeight.Normal,
         fontSize = 18,
         lineHeight = 27
@@ -170,7 +174,7 @@ object BodyStyles {
 
     @Composable
     fun largeMedium() = buildTextStyle(
-        fontFamily = FontFamily(fontResources("sf_pro_display_medium")),
+        fontFamily = FontFamily(Font(Res.font.sf_pro_display_medium)),
         fontWeight = FontWeight.Medium,
         fontSize = 18,
         lineHeight = 27
@@ -178,7 +182,7 @@ object BodyStyles {
 
     @Composable
     fun mediumRegular() = buildTextStyle(
-        fontFamily = FontFamily(fontResources("sf_pro_display_regular")),
+        fontFamily = FontFamily(Font(Res.font.sf_pro_display_regular)),
         fontWeight = FontWeight.Normal,
         fontSize = 16,
         lineHeight = 24
@@ -186,7 +190,7 @@ object BodyStyles {
 
     @Composable
     fun mediumMedium() = buildTextStyle(
-        fontFamily = FontFamily(fontResources("sf_pro_display_medium")),
+        fontFamily = FontFamily(Font(Res.font.sf_pro_display_medium)),
         fontWeight = FontWeight.Medium,
         fontSize = 16,
         lineHeight = 24
@@ -194,7 +198,7 @@ object BodyStyles {
 
     @Composable
     fun smallRegular() = buildTextStyle(
-        fontFamily = FontFamily(fontResources("sf_pro_display_regular")),
+        fontFamily = FontFamily(Font(Res.font.sf_pro_display_regular)),
         fontWeight = FontWeight.Normal,
         fontSize = 14,
         lineHeight = 21
@@ -202,7 +206,7 @@ object BodyStyles {
 
     @Composable
     fun smallMedium() = buildTextStyle(
-        fontFamily = FontFamily(fontResources("sf_pro_display_medium")),
+        fontFamily = FontFamily(Font(Res.font.sf_pro_display_medium)),
         fontWeight = FontWeight.Medium,
         fontSize = 14,
         lineHeight = 21
@@ -210,7 +214,7 @@ object BodyStyles {
 
     @Composable
     fun extraSmallBold() = buildTextStyle(
-        fontFamily = FontFamily(fontResources("sf_pro_display_bold")),
+        fontFamily = FontFamily(Font(Res.font.sf_pro_display_bold)),
         fontWeight = FontWeight.Bold,
         fontSize = 12,
         lineHeight = 18
@@ -218,7 +222,7 @@ object BodyStyles {
 
     @Composable
     fun extraSmallMedium() = buildTextStyle(
-        fontFamily = FontFamily(fontResources("sf_pro_display_medium")),
+        fontFamily = FontFamily(Font(Res.font.sf_pro_display_medium)),
         fontWeight = FontWeight.Medium,
         fontSize = 12,
         lineHeight = 18
@@ -228,7 +232,7 @@ object BodyStyles {
 object FieldStyles {
     @Composable
     fun normalRegular() = buildTextStyle(
-        fontFamily = FontFamily(fontResources("sf_pro_display_regular")),
+        fontFamily = FontFamily(Font(Res.font.sf_pro_display_regular)),
         fontWeight = FontWeight.Normal,
         fontSize = 18,
         lineHeight = 24
@@ -236,7 +240,7 @@ object FieldStyles {
 
     @Composable
     fun mediumRegular() = buildTextStyle(
-        fontFamily = FontFamily(fontResources("sf_pro_display_regular")),
+        fontFamily = FontFamily(Font(Res.font.sf_pro_display_regular)),
         fontWeight = FontWeight.Normal,
         fontSize = 16,
         lineHeight = 20

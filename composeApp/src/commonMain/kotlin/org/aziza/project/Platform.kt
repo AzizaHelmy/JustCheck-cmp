@@ -1,7 +1,6 @@
 package org.aziza.project
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.text.font.Font
 import io.ktor.client.engine.HttpClientEngine
 
 interface Platform {
@@ -11,9 +10,6 @@ interface Platform {
 
 expect fun getPlatform(): Platform
 expect fun getEngine(): HttpClientEngine
-
-@Composable
-expect fun fontResources(font: String): Font
 
 expect class PlatformContext
 
