@@ -1,9 +1,14 @@
+@file:OptIn(ExperimentalComposeLibrary::class)
+
+import org.jetbrains.compose.ExperimentalComposeLibrary
+
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidApplication)
     //alias(libs.plugins.androidLibrary) //todo:lib
     alias(libs.plugins.composeMultiplatform)
     kotlin("plugin.serialization") version "1.9.0"
+    alias(libs.plugins.compose.compiler)
 }
 
 kotlin {
@@ -54,7 +59,8 @@ kotlin {
             implementation(libs.compose.materialIconsExtended)  // Jetpack Compose Material Icons Extended
 
             // Jetpack Compose Components Resources
-            implementation(libs.compose.components.resources)
+            implementation(compose.components.resources)
+
 
 
         }

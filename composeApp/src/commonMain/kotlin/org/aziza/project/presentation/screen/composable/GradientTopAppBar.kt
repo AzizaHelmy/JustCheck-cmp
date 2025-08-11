@@ -38,7 +38,7 @@ fun GradientTopAppBar(
     Box(
         modifier = Modifier.fillMaxWidth().height(64.dp + statusBarPadding).background(
             brush = Brush.verticalGradient(
-                colors = listOf(Color(0xFF490000), Color(0xFF000000))
+                colors = listOf(Color(0xFF000000), Color(0xFF490000))
             )
         ), contentAlignment = Alignment.Center
     ) {

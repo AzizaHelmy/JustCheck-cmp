@@ -2,13 +2,22 @@ package org.aziza.project.presentation.screen.sdui_v2
 
 import kotlinx.serialization.json.Json
 
+
+data class CoinsUiScreen(
+    val title: String,
+    val flowId: String,
+    val components: List<CoinsUiComponent>
+)
 // UI models used by the SDUI renderer
-sealed class CoinsUiComponent { abstract val id: String }
+sealed class CoinsUiComponent {
+    abstract val id: String
+}
 
 data class CoinsBannerUi(
     override val id: String,
     val imageUrl: String,
     val coins: String,
+    val action: ViewAction? = null,
     val description: String
 ) : CoinsUiComponent()
 
@@ -18,19 +27,21 @@ data class CoinsGiftCardUi(
     val title: String
 ) : CoinsUiComponent()
 
-data class CoinsProductCardUi(
-    override val id: String,
-    val imageUrl: String,
-    val title: String,
-    val priceRange: String,
-    val subProducts: List<CoinsSubProductUi>
-) : CoinsUiComponent()
-
+// Represents an expandable list of categories, each containing products
 data class CoinsExpandableUi(
     override val id: String,
     val headerTitle: String,
     val headerBadge: String?,
     val items: List<CoinsProductCardUi>
+) : CoinsUiComponent()
+
+data class CoinsProductCardUi(
+    override val id: String,
+    val imageUrl: String,
+    val title: String,
+    val priceRange: String,
+    val action: ViewAction? = null,
+    val subProducts: List<CoinsSubProductUi> = emptyList()
 ) : CoinsUiComponent()
 
 data class CoinsSubProductUi(
@@ -41,12 +52,6 @@ data class CoinsSubProductUi(
     val quota: String,
     val fees: String,
     val validity: String
-)
-
-data class CoinsUiScreen(
-    val title: String,
-    val flowId: String,
-    val components: List<CoinsUiComponent>
 )
 
 // Registry to resolve values by keys from the top-level data section
@@ -66,7 +71,7 @@ private class CoinsDataRegistry(private val response: CoinsResponse) {
     }
 }
 
-// Public API: parse json and return a UI screen
+// Parse json and return a UI screen
 fun parseCoinsScreen(json: String): CoinsUiScreen {
     val jsonConfig = Json { ignoreUnknownKeys = true }
     val response = jsonConfig.decodeFromString(CoinsResponse.serializer(), json)
@@ -80,9 +85,19 @@ fun parseCoinsScreen(json: String): CoinsUiScreen {
                         id = "coins_banner",
                         imageUrl = registry.value("IMAGE_URL") ?: "",
                         coins = registry.value("COINS") ?: "0",
+                        action = ViewAction(
+                            actionType = "LINK",
+                            link = "https://www.etisalat.eg/StaticFiles/MyEtisalat/Ramadan/Akwa_en.html",
+                            screenId = registry.value("SCREEN_ID"),
+                            parameters = mapOf(
+                                "COINS" to (registry.value("COINS") ?: "0"),
+                                "COINS_DESC" to (registry.value("COINS_DESC") ?: "")
+                            )
+                        ),
                         description = registry.value("COINS_DESC") ?: ""
                     )
                 )
+
                 "card_my_gifts" -> add(
                     CoinsGiftCardUi(
                         id = "gift_card",
@@ -90,6 +105,7 @@ fun parseCoinsScreen(json: String): CoinsUiScreen {
                         title = "My Gifts"
                     )
                 )
+
                 "list_expandable" -> addAll(buildExpandableFromCategories(registry.categories))
             }
         }
@@ -112,8 +128,10 @@ private fun buildExpandableFromCategories(categories: List<Category>): List<Coin
                     title = sp.title,
                     imageUrl = sp.itemImage,
                     giftId = sp.parameters.parameter.value,
-                    quota = sp.attributes.attribute.firstOrNull { it.key == "QUOTA" }?.attributeValue?.value ?: "",
-                    fees = sp.attributes.attribute.firstOrNull { it.key == "GIFT_FEES" }?.attributeValue?.value ?: "",
+                    quota = sp.attributes.attribute.firstOrNull { it.key == "QUOTA" }?.attributeValue?.value
+                        ?: "",
+                    fees = sp.attributes.attribute.firstOrNull { it.key == "GIFT_FEES" }?.attributeValue?.value
+                        ?: "",
                     validity = sp.attributes.attribute.firstOrNull { it.key == "GIFT_VALIDITY" }?.attributeValue?.value
                         ?: ""
                 )

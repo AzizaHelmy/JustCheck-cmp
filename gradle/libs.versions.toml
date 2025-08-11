@@ -11,10 +11,10 @@ androidx-espresso = "3.6.1"
 androidx-lifecycle = "2.8.4"
 androidx-testExt = "1.2.1"
 coilCompose = "3.0.0-alpha06"
-composeMultiplatform = "1.5.11"
+composeMultiplatform = "1.8.2"
 junit = "4.13.2"
-koinCompose = "1.1.5"
-kotlin = "1.9.21"
+koinCompose = "4.0.0"
+kotlin = "2.2.0"
 koin-version = "3.5.0"
 coroutine-version = "1.7.3"
 ktor-version = "2.3.3"
@@ -24,6 +24,7 @@ kotlinStdlib = "1.9.21"
 runner = "1.6.2"
 core = "1.6.1"
 compose-coil-version = "2.4.0"
+icons="1.5.11"
 
 
 
@@ -63,12 +64,12 @@ compose-components-resources = { module = "org.jetbrains.compose.components:comp
 compose-runtime = { module = "org.jetbrains.compose.runtime:runtime", version.ref = "composeMultiplatform" }
 compose-foundation = { module = "org.jetbrains.compose.foundation:foundation", version.ref = "composeMultiplatform" }
 compose-material3 = { module = "org.jetbrains.compose.material3:material3", version.ref = "composeMultiplatform" }
-compose-materialIconsExtended = { module = "org.jetbrains.compose.material:material-icons-extended", version.ref = "composeMultiplatform" }
+compose-materialIconsExtended = { module = "org.jetbrains.compose.material:material-icons-extended", version.ref = "icons" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
 composeMultiplatform = { id = "org.jetbrains.compose", version.ref = "composeMultiplatform" }
-composeCompiler = { id = "org.jetbrains.compose", version.ref = "composeMultiplatform" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 androidKotlinMultiplatformLibrary = { id = "com.android.kotlin.multiplatform.library", version.ref = "agp" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }

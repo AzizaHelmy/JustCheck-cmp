@@ -1,9 +1,8 @@
 package org.aziza.project.presentation.screen.sdui_v2
 
-import kotlinx.serialization.Serializable
 import kotlinx.serialization.KSerializer
+import kotlinx.serialization.Serializable
 import kotlinx.serialization.descriptors.SerialDescriptor
-import kotlinx.serialization.descriptors.buildClassSerialDescriptor
 import kotlinx.serialization.descriptors.listSerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
@@ -11,8 +10,6 @@ import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonDecoder
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
-import kotlinx.serialization.json.decodeFromJsonElement
-import kotlinx.serialization.json.jsonPrimitive
 
 /**
  * Created by Aziza Helmy on 06/08/2025.
@@ -172,7 +169,6 @@ data class Views(
     val components: List<ViewComponentRaw>
 )
 
-// Replace sealed class with a raw component carrier to avoid polymorphic setup for now
 @Serializable
 data class ViewComponentRaw(
     val type: String,

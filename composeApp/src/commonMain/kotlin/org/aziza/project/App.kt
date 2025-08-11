@@ -4,9 +4,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import org.aziza.project.di.initKoin
-import org.aziza.project.presentation.screen.sdui.HomeScreenSDUI
 import org.aziza.project.presentation.screen.sdui_v2.CoinsScreenSDUI
-import org.aziza.project.presentation.screen.sdui_v2.parseCoinsScreen
 import org.aziza.project.sdk.HomeScreenConfig
 
 @Composable
@@ -29,7 +27,7 @@ fun App(config: HomeScreenConfig) {
           },
           {
             "attributeValue": {
-              "value": "0"
+              "value": "230"
             },
             "key": "COINS"
           },
