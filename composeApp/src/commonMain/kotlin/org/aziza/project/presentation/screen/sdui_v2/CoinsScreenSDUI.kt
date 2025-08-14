@@ -1,7 +1,7 @@
 package org.aziza.project.presentation.screen.sdui_v2
 
 import Colors
-import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -10,21 +10,18 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
@@ -44,6 +41,8 @@ import androidx.compose.ui.composed
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
@@ -240,7 +239,8 @@ private fun ExpandableList(component: CoinsExpandableUi) {
         Column(
             Modifier
                 .fillMaxWidth()
-                .padding(12.dp),
+                .padding(12.dp)
+                .animateContentSize(),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             Row(
@@ -277,20 +277,49 @@ private fun ExpandableList(component: CoinsExpandableUi) {
                 )
             }
 
-            AnimatedVisibility(visible = expanded) {
-                LazyVerticalGrid(
-                    columns = GridCells.Fixed(3),
+            if (expanded) {
+                val spacing = 8.dp
+                val columns = 3
+
+                FlowRow(
+                    maxItemsInEachRow = columns,
+                    horizontalArrangement = Arrangement.spacedBy(spacing),
                     verticalArrangement = Arrangement.spacedBy(12.dp),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .heightIn(max = 9999.dp),
-                    userScrollEnabled = false
+                    modifier = Modifier.fillMaxWidth()
                 ) {
-                    items(component.items) { product ->
-                        ProductCard(product)
+                    var parentWidthPx by remember { mutableStateOf(0) }
+
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .onGloballyPositioned {
+                                parentWidthPx = it.size.width
+                            }) {}
+
+                    val cellWidth = with(LocalDensity.current) {
+                        ((parentWidthPx / columns) - spacing.toPx() * (columns - 1) / columns).toDp()
+                    }
+                    component.items.forEach { product ->
+                        ProductCard(
+                            product,
+                            modifier = Modifier
+                                .width(cellWidth)
+                        )
                     }
                 }
+                /* LazyVerticalGrid(
+                     columns = GridCells.Fixed(3),
+                     verticalArrangement = Arrangement.spacedBy(12.dp),
+                     horizontalArrangement = Arrangement.spacedBy(8.dp),
+                     modifier = Modifier
+                         .fillMaxWidth()
+                         .heightIn(max = 9999.dp),
+                     userScrollEnabled = false
+                 ) {
+                     items(component.items) { product ->
+                         ProductCard(product)
+                     }
+                 }*/
             }
         }
     }
@@ -298,11 +327,13 @@ private fun ExpandableList(component: CoinsExpandableUi) {
 
 
 @Composable
-private fun ProductCard(item: CoinsProductCardUi) {
+private fun ProductCard(
+    item: CoinsProductCardUi, modifier: Modifier = Modifier
+) {
     Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .wrapContentHeight(),
+        modifier = modifier,
+        //.fillMaxWidth()
+        //.wrapContentHeight(),
         colors = CardDefaults.cardColors(containerColor = Colors().naturalColor.naturalGrayBackground),
         elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
         shape = RoundedCornerShape(16.dp)
