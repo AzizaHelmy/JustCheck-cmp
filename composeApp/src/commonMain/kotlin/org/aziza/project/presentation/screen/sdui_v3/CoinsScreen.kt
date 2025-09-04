@@ -369,9 +369,9 @@ fun RenderBox(component: SDUIComponent, registry: CoinsDataRegistry) {
 
 @Composable
 fun RenderExpandableList(component: SDUIComponent, registry: CoinsDataRegistry) {
-    var expanded by remember { mutableStateOf(true) }
-
     registry.categories.forEach { category ->
+        var expanded by remember(category.categoryId) { mutableStateOf(true) }
+
         Card(
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(8.dp),
@@ -472,7 +472,7 @@ fun RenderFlowRowWithProducts(
     registry: CoinsDataRegistry,
     category: Category
 ) {
-    val flowRowComponent = cardComponent.components?.find { it.type == "flow_row" }
+    val flowRowComponent = findFirstComponentByType(cardComponent, "flow_row")
     val style = flowRowComponent?.style
     val spacing = (style?.horizontalSpacing ?: 8).dp
     val columns = style?.maxItemsInEachRow ?: 3
@@ -504,6 +504,15 @@ fun RenderFlowRowWithProducts(
     }
 }
 
+private fun findFirstComponentByType(root: SDUIComponent, type: String): SDUIComponent? {
+    if (root.type == type) return root
+    root.components?.forEach { child ->
+        val found = findFirstComponentByType(child, type)
+        if (found != null) return found
+    }
+    return null
+}
+
 
 @Composable
 fun RenderProductCardFromTemplate(
@@ -513,7 +522,7 @@ fun RenderProductCardFromTemplate(
 ) {
     // The template is the list of components that define the card structure
     // For your JSON, this should be a single card component
-    val cardTemplate = template.firstOrNull { it.type == "card" }
+    val cardTemplate = template.firstOrNull { it.type == "card" } ?: template.firstOrNull()
 
     if (cardTemplate != null) {
         Card(
@@ -554,7 +563,7 @@ fun RenderComponentWithProductData(component: SDUIComponent, product: Product) {
                 }
             ) {
                 component.components?.forEach { child ->
-                    if (child.type == "spacer" && child.style?.weight != null) {
+                if (child.type == "spacer" && child.style?.weight != null) {
                         Spacer(modifier = Modifier.weight(child.style.weight))
                     } else {
                         RenderComponentWithProductData(child, product)
@@ -732,14 +741,9 @@ fun Modifier.applyClickAction(action: ViewAction?): Modifier {
         this.clickable {
             // Handle action based on actionType
             when (action.actionType) {
-                "click" -> { /* Handle click */
-                }
-
-                "screen_id" -> { /* Navigate to screen */
-                }
-
-                "link" -> { /* Open link */
-                }
+                "click" -> { /* Handle click */ }
+                "screen_id" -> { /* Navigate to screen */ }
+                "link" -> { /* Open link */ }
             }
         }
     } else this
@@ -755,13 +759,11 @@ fun String.parseColor(): Color {
                 val colorLong = colorString.toLong(16)
                 Color(0xFF000000 or colorLong)
             }
-
             8 -> {
                 // ARGB format (e.g., "FFFF0000" for red with full alpha)
                 val colorLong = colorString.toLong(16)
                 Color(colorLong)
             }
-
             else -> Color.Unspecified
         }
     } catch (e: Exception) {
