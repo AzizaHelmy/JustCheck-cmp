@@ -114,7 +114,7 @@ private fun CardBannerCoins(component: CoinsBannerUi) {
             .padding(horizontal = 8.dp),
         colors = CardDefaults.cardColors(containerColor = Color.Transparent),
         elevation = CardDefaults.cardElevation(0.dp),
-        shape = RoundedCornerShape(12.dp)
+        shape = RoundedCornerShape(12.dp)//todo:constant at eand?
     ) {
         Column(
             modifier = Modifier
@@ -307,19 +307,6 @@ private fun ExpandableList(component: CoinsExpandableUi) {
                         )
                     }
                 }
-                /* LazyVerticalGrid(
-                     columns = GridCells.Fixed(3),
-                     verticalArrangement = Arrangement.spacedBy(12.dp),
-                     horizontalArrangement = Arrangement.spacedBy(8.dp),
-                     modifier = Modifier
-                         .fillMaxWidth()
-                         .heightIn(max = 9999.dp),
-                     userScrollEnabled = false
-                 ) {
-                     items(component.items) { product ->
-                         ProductCard(product)
-                     }
-                 }*/
             }
         }
     }
