@@ -15,7 +15,7 @@ fun App(config: HomeScreenConfig) {
 //            println("Screen Id:$screenId")
 //            println("Extras:$extras")
 //        }
-        val sampleJson = """ {
+        val sampleJson =""" {
   "data": {
     "customerProfileResponse": {
       "status": "true",
@@ -2158,8 +2158,8 @@ fun App(config: HomeScreenConfig) {
                       {
                         "type": "image",
                         "style": {
-                           "size": 32,
-                  "contentScale": "fit"
+                          "size": 32,
+                          "contentScale": "fit"
                         },
                         "dataKey": "ic_coins"
                       },
@@ -2169,9 +2169,8 @@ fun App(config: HomeScreenConfig) {
                           "font": "head2",
                           "color": "#0xFFFFFFFF",
                           "padding": {
-                    
-                        "right": 8
-                      }
+                            "right": 8
+                          }
                         },
                         "dataKey": "COINS"
                       }
@@ -2183,12 +2182,11 @@ fun App(config: HomeScreenConfig) {
                 "type": "text",
                 "style": {
                   "font": "body_small_regular",
-                                            "color": "#0xFFFFFFFF",
-                                             "padding": {
-                        "top": 8,
-                        "bottom": 8
-                      }
-
+                  "color": "#0xFFFFFFFF",
+                  "padding": {
+                    "top": 8,
+                    "bottom": 8
+                  }
                 },
                 "dataKey": "COINS_DESC"
               }
@@ -2250,9 +2248,9 @@ fun App(config: HomeScreenConfig) {
               },
               {
                 "type": "icon",
-                        "style": {},
-                        "dataKey": "ic_arrow_down",
-                        "action": {}
+                "style": {},
+                "dataKey": "ic_arrow_down",
+                "action": {}
               }
             ]
           }
@@ -2322,112 +2320,124 @@ fun App(config: HomeScreenConfig) {
                   },
                   {
                     "type": "flow_row",
-                    "dataKey": "",
                     "style": {
                       "maxItemsInEachRow": 3,
                       "horizontalSpacing": 8,
                       "verticalSpacing": 12,
                       "width": "match_parent"
                     },
-                    "components": {
-                      "type": "card",
-                      "style": {
-                        "shape": "rounded",
-                        "backgroundColor": [
-                          "#F5F5F5"
-                        ],
-                        "padding": {
-                          "top": 12,
-                          "bottom": 12,
-                          "left": 8,
-                          "right": 8
+                    "components": [
+                      {
+                        "type": "card",
+                        "style": {
+                          "shape": "rounded_16",
+                          "backgroundColor": [
+                            "#F5F5F5"
+                          ],
+                          "height": 160,
+                          "padding": {
+                            "top": 12,
+                            "bottom": 12,
+                            "left": 8,
+                            "right": 8
+                          }
                         },
-                        "height": 140
-                      },
-                      "components": [
-                        {
-                          "type": "column",
-                          "style": {
-                            "arrangement": "spacedBy_8",
-                            "alignment": "center"
-                          },
-                          "components": [
-                            {
-                              "type": "image",
-                              "style": {
-                                "size": 50,
-                                "contentScale": "fillBounds"
-                              },
-                              "dataKey": ""
-                            },
-                            {
-                              "type": "text",
-                              "style": {
-                                "font": "body"
-                              },
-                              "dataKey": ""
-                            },
-                            {
-                              "type": "spacer",
-                              "style": {
-                                "weight": 1
+                        "components": [
+                          {
+                            "type": "column",
+                            "style": {
+                              "alignment": "center",
+                              "arrangement": "spacedBy_8",
+                              "padding": {
+                                "top": 8,
+                                "bottom": 8,
+                                "left": 8,
+                                "right": 8
                               }
                             },
-                            {
-                              "type": "box",
-                              "style": {
-                                "height": 32,
-                                "width": "match_parent",
-                                "shape": "rounded_24",
-                                "border": {
-                                  "color": "#000000",
-                                  "width": 1
+                            "components": [
+                              {
+                                "type": "image",
+                                "style": {
+                                  "size": 50,
+                                  "contentScale": "fit"
+                                },
+                                "dataKey": "imageUrl"
+                              },
+                              {
+                                "type": "text",
+                                "style": {
+                                  "font": "body_medium_regular",
+                                  "maxLines": 2,
+                                  "textAlign": "center",
+                                  "overflow": "ellipsis"
+                                },
+                                "dataKey": "title"
+                              },
+                              {
+                                "type": "spacer",
+                                "style": {
+                                  "weight": 1
                                 }
                               },
-                              "action": {
-                                "actionType": "click",
-                                "screenId": "purchase_screen",
-                                "extras": [
-                                  {
-                                    "key": "productId",
-                                    "dataKey": "id"
-                                  }
-                                ]
-                              },
-                              "components": [
-                                {
-                                  "type": "row",
-                                  "style": {
-                                    "alignment": "center",
-                                    "arrangement": "center",
-                                    "padding": {
-                                      "left": 8,
-                                      "right": 8
-                                    }
+                              {
+                                "type": "box",
+                                "style": {
+                                  "height": 32,
+                                  "width": "match_parent",
+                                  "shape": "rounded_24",
+                                  "border": {
+                                    "color": "#000000",
+                                    "width": 1
                                   },
-                                  "components": [
+                                  "alignment": "center"
+                                },
+                                "action": {
+                                  "actionType": "click",
+                                  "screenId": "purchase_screen",
+                                  "extras": [
                                     {
-                                      "type": "icon",
-                                      "style": {
-                                        "size": 16
-                                      },
-                                      "dataKey": "ic_coins"
-                                    },
-                                    {
-                                      "type": "text",
-                                      "style": {
-                                        "font": "body_small_regular"
-                                      },
-                                      "dataKey": ""
+                                      "key": "productId",
+                                      "dataKey": "id"
                                     }
                                   ]
-                                }
-                              ]
-                            }
-                          ]
-                        }
-                      ]
-                    }
+                                },
+                                "components": [
+                                  {
+                                    "type": "row",
+                                    "style": {
+                                      "alignment": "center",
+                                      "arrangement": "center",
+                                      "padding": {
+                                        "left": 8,
+                                        "right": 8
+                                      }
+                                    },
+                                    "components": [
+                                      {
+                                        "type": "icon",
+                                        "style": {
+                                          "size": 16
+                                        },
+                                        "dataKey": "ic_coins"
+                                      },
+                                      {
+                                        "type": "text",
+                                        "style": {
+                                          "font": "body_small_regular",
+                                          "textAlign": "center"
+                                        },
+                                        "dataKey": "longDesc"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
                   }
                 ]
               }

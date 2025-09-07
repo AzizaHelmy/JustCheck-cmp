@@ -588,7 +588,7 @@ fun RenderComponentWithProductData(component: SDUIComponent, product: Product) {
         "text" -> {
             val style = component.style
             Text(
-                text = product.title,
+                text = product.longDesc,
                 style = when (style?.font ?: style?.toString()) {
                     "body" -> MaterialTheme.typography.bodyMedium
                     else -> MaterialTheme.typography.bodyMedium
