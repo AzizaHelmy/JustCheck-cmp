@@ -11,6 +11,12 @@ import org.aziza.project.sdk.HomeScreenConfig
 fun App(config: HomeScreenConfig) {
     remember { initKoin() }
     MaterialTheme {
+
+
+
+
+
+
 //        HomeScreenSDUI { screenId, extras ->
 //            println("Screen Id:$screenId")
 //            println("Extras:$extras")
@@ -2195,64 +2201,49 @@ fun App(config: HomeScreenConfig) {
         ]
       },
       {
-        "type": "card",
+        "type": "row",
         "style": {
-          "shape": "rounded",
-          "backgroundColor": [
-            "#0xFFffffff"
-          ],
+          "backgroundColor": ["#FFFFFF"],
+          "cornerRadius": 8,
           "padding": {
-            "top": 8,
-            "bottom": 8,
-            "left": 8,
-            "right": 8
-          }
+            "top": 20,
+            "bottom": 20,
+            "left": 12,
+            "right": 12
+          },
+          "arrangement": "space-between",
+          "alignment": "center"
         },
         "components": [
           {
-            "type": "row",
+            "type": "image",
+            "style": {
+              "size": 40,
+              "contentScale": "crop"
+            },
+            "dataKey": "gift_icon"
+          },
+          {
+            "type": "text",
             "style": {
               "padding": {
-                "top": 20,
-                "bottom": 20,
-                "left": 12,
-                "right": 12
+                "right": 16
               },
-              "arrangement": "space-between",
-              "alignment": "center"
+              "font": "head4"
             },
-            "components": [
-              {
-                "type": "image",
-                "style": {
-                  "size": 40,
-                  "contentScale": "crop"
-                },
-                "dataKey": "gift_icon"
-              },
-              {
-                "type": "text",
-                "style": {
-                  "padding": {
-                    "right": 16
-                  },
-                  "font": "head4"
-                },
-                "data": "My Gifts"
-              },
-              {
-                "type": "spacer",
-                "style": {
-                  "weight": 1
-                }
-              },
-              {
-                "type": "icon",
-                "style": {},
-                "dataKey": "ic_arrow_down",
-                "action": {}
-              }
-            ]
+            "data": "My Gifts"
+          },
+          {
+            "type": "spacer",
+            "style": {
+              "weight": 1
+            }
+          },
+          {
+            "type": "icon",
+            "style": {},
+            "dataKey": "ic_arrow_down",
+            "action": {}
           }
         ]
       },

@@ -186,11 +186,14 @@ fun RenderColumn(component: SDUIComponent, registry: CoinsDataRegistry) {
 @Composable
 fun RenderRow(component: SDUIComponent, registry: CoinsDataRegistry) {
     val style = component.style
+    val cornerRadius = style?.cornerRadius?.dp ?: 0.dp
 
     Row(
         modifier = Modifier
             .applyWidth(style?.width)
             .applyHeight(style?.height)
+            .clip(RoundedCornerShape(cornerRadius))
+            .applyBackground(style?.backgroundColor)
             .applyPadding(style?.padding),
         horizontalArrangement = when (style?.arrangement) {
             "space-between" -> Arrangement.SpaceBetween
@@ -215,7 +218,6 @@ fun RenderRow(component: SDUIComponent, registry: CoinsDataRegistry) {
         }
     }
 }
-
 
 @Composable
 fun RenderText(component: SDUIComponent, registry: CoinsDataRegistry) {
@@ -454,15 +456,22 @@ fun RenderFlowRow(component: SDUIComponent, registry: CoinsDataRegistry) {
         val cellWidth = with(LocalDensity.current) {
             ((parentWidthPx / columns) - spacing.toPx() * (columns - 1) / columns).toDp()
         }
+        val products: List<Product> = registry.listValue(component.dataKey)
 
-        // This would render individual product cards based on the component template
-        registry.categories.forEach { category ->
-            category.products.product.forEach { product ->
-                component.components?.let { template ->
-                    RenderProductCardFromTemplate(template, product, Modifier.width(cellWidth))
-                }
+        products.forEach { product ->
+            component.components?.let { template ->
+                RenderProductCardFromTemplate(template, product, Modifier.width(cellWidth))
             }
         }
+
+//        // This would render individual product cards based on the component template
+//        registry.categories.forEach { category ->
+//            category.products.product.forEach { product ->
+//                component.components?.let { template ->
+//                    RenderProductCardFromTemplate(template, product, Modifier.width(cellWidth))
+//                }
+//            }
+//        }
     }
 }
 
@@ -563,7 +572,7 @@ fun RenderComponentWithProductData(component: SDUIComponent, product: Product) {
                 }
             ) {
                 component.components?.forEach { child ->
-                if (child.type == "spacer" && child.style?.weight != null) {
+                    if (child.type == "spacer" && child.style?.weight != null) {
                         Spacer(modifier = Modifier.weight(child.style.weight))
                     } else {
                         RenderComponentWithProductData(child, product)
@@ -741,9 +750,14 @@ fun Modifier.applyClickAction(action: ViewAction?): Modifier {
         this.clickable {
             // Handle action based on actionType
             when (action.actionType) {
-                "click" -> { /* Handle click */ }
-                "screen_id" -> { /* Navigate to screen */ }
-                "link" -> { /* Open link */ }
+                "click" -> { /* Handle click */
+                }
+
+                "screen_id" -> { /* Navigate to screen */
+                }
+
+                "link" -> { /* Open link */
+                }
             }
         }
     } else this
@@ -759,11 +773,13 @@ fun String.parseColor(): Color {
                 val colorLong = colorString.toLong(16)
                 Color(0xFF000000 or colorLong)
             }
+
             8 -> {
                 // ARGB format (e.g., "FFFF0000" for red with full alpha)
                 val colorLong = colorString.toLong(16)
                 Color(colorLong)
             }
+
             else -> Color.Unspecified
         }
     } catch (e: Exception) {

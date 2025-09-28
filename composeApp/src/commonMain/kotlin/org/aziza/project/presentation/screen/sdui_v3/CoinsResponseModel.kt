@@ -36,6 +36,7 @@ data class ComponentStyle(
     val shape: String? = null,
     val elevation: Int? = null,
     val backgroundColor: List<String>? = null,
+    val cornerRadius: Int? = null,
     val padding: Padding? = null,
     val margin: Margin? = null,
     val width: String? = null,
@@ -94,6 +95,7 @@ data class ComponentStyleSurrogate(
     val shape: String? = null,
     val elevation: Int? = null,
     val backgroundColor: List<String>? = null,
+    val cornerRadius: Int? = null,
     val padding: Padding? = null,
     val margin: Margin? = null,
     val width: String? = null,
@@ -114,7 +116,7 @@ data class ComponentStyleSurrogate(
     val frame: FrameSize? = null
 ) {
     fun toReal(): ComponentStyle = ComponentStyle(
-        shape, elevation, backgroundColor, padding, margin,
+        shape, elevation, backgroundColor,cornerRadius, padding, margin,
         width, height, size, font, color, textAlign,
         arrangement, alignment, weight, offset,
         maxItemsInEachRow, horizontalSpacing, verticalSpacing,
@@ -123,7 +125,7 @@ data class ComponentStyleSurrogate(
 
     companion object {
         fun fromReal(real: ComponentStyle): ComponentStyleSurrogate = ComponentStyleSurrogate(
-            real.shape, real.elevation, real.backgroundColor, real.padding, real.margin,
+            real.shape, real.elevation, real.backgroundColor,real.cornerRadius, real.padding, real.margin,
             real.width, real.height, real.size, real.font, real.color, real.textAlign,
             real.arrangement, real.alignment, real.weight, real.offset,
             real.maxItemsInEachRow, real.horizontalSpacing, real.verticalSpacing,

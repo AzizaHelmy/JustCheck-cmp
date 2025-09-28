@@ -18,6 +18,8 @@ import kotlinx.serialization.json.JsonDecoder
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
 import org.aziza.project.presentation.screen.sdui_v2.Category
+import org.aziza.project.presentation.screen.sdui_v2.Product
+import org.aziza.project.presentation.screen.sdui_v2.SubProduct
 import org.jetbrains.compose.resources.DrawableResource
 
 /**
@@ -80,17 +82,12 @@ object ComponentsListSerializer : KSerializer<List<SDUIComponent>?> {
         }
     }
 }
-sealed class ImageSource {
-    data class Url(val url: String) : ImageSource()
-    data class DrawableRes(val resId: DrawableResource) : ImageSource()   // remove @DrawableRes
-    object None : ImageSource()
-}
-
 
 // -----------------------------
 // Data Registry
 // -----------------------------
 class CoinsDataRegistry(private val response: CoinsResponse) {
+
     private val attributes: Map<String, String> by lazy {
         response.data.customerProfileResponse.responseAttributes.responseAttribute
             .associate { it.key to it.attributeValue.value }
@@ -99,6 +96,29 @@ class CoinsDataRegistry(private val response: CoinsResponse) {
     val categories: List<Category> by lazy {
         response.data.customerProfileResponse.Categories.Category
     }
+
+    val products: List<Product> by lazy {
+        categories.flatMap { it.products.product }
+    }
+
+    val subProducts: List<SubProduct> by lazy {
+        products.flatMap { it.subProducts.subProduct }
+    }
+
+    private val lists: Map<String, List<Any>> by lazy {
+        mapOf(
+            "CATEGORIES" to categories,
+            "PRODUCTS" to products,
+            "SUB_PRODUCTS" to subProducts
+        )
+    }
+
+    fun <T> listValue(key: String?): List<T> {
+        if (key.isNullOrBlank()) return emptyList()
+        @Suppress("UNCHECKED_CAST")
+        return lists[key] as? List<T> ?: emptyList()
+    }
+
     // For text
     fun value(key: String?): String {
         if (key.isNullOrBlank()) return ""
@@ -119,6 +139,13 @@ class CoinsDataRegistry(private val response: CoinsResponse) {
         }
     }
 }
+
+sealed class ImageSource {
+    data class Url(val url: String) : ImageSource()
+    data class DrawableRes(val resId: DrawableResource) : ImageSource()   // remove @DrawableRes
+    object None : ImageSource()
+}
+
 
 // Main Parsing Function
 // -----------------------------

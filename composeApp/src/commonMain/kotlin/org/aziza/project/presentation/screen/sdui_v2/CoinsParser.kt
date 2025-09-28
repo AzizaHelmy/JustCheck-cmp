@@ -152,3 +152,43 @@ private fun buildExpandableFromCategories(categories: List<Category>): List<Coin
         )
     }
 }
+
+fun Map<String, Any>.extractAttributeValue(targetKey: String): Any? {
+
+    fun search(obj: Any?): Any? {
+        when (obj) {
+            is Map<*, *> -> {
+                // لو المفتاح موجود مباشرة
+                if (obj.containsKey(targetKey)) {
+                    val value = obj[targetKey]
+                    if (value is Map<*, *>) {
+                        val attributeValue = (value["attributeValue"] as? Map<*, *>)?.get("value")
+                        if (attributeValue != null) return attributeValue
+                    }
+                    return value
+                }
+
+                // لو موجود على هيئة key + attributeValue.value
+                val key = obj["key"] as? String
+                if (key == targetKey) {
+                    val value = (obj["attributeValue"] as? Map<*, *>)?.get("value")
+                    if (value != null) return value
+                }
+
+                // نعمل search جوا بقية العناصر
+                for ((_, v) in obj) {
+                    val found = search(v)
+                    if (found != null) return found
+                }
+            }
+            is List<*> -> {
+                for (item in obj) {
+                    val found = search(item)
+                    if (found != null) return found
+                }
+            }
+        }
+        return null
+    }
+    return search(this)
+}
